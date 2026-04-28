@@ -1,5 +1,7 @@
 package com.utn.chapterone.entities;
 
+import jakarta.persistence.*; 
+
 public class Libro {
 
 	@Id

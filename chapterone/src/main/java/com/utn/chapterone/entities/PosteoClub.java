@@ -1,5 +1,4 @@
-package entities;
-
+package com.utn.chapterone.entities;
 import java.time.LocalDateTime;
 
 public class PosteoClub {

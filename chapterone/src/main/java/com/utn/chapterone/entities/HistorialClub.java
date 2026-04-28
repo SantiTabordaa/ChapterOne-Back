@@ -1,4 +1,4 @@
-package entities;
+package com.utn.chapterone.entities;
 
 public class HistorialClub {
 	
