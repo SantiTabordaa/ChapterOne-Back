@@ -1,17 +1,24 @@
-package entities;
+package com.utn.chapterone.entities;
+import jakarta.persistence.*;
 
+@Entity
+@Table(name = "autores")
 public class Autor {
-
-	private int idAutor;
+	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Integer idAutor;
+	@Column(nullable = false)
 	private String nombre;
+	@Column(nullable = false)
 	private String apellido;
-	private String Pseudonimo;
+	private String pseudonimo;
 	private String nacionalidad;
 	private String urlFoto;
-	public int getIdAutor() {
+
+
+	public Integer getIdAutor() {
 		return idAutor;
 	}
-	public void setIdAutor(int idAutor) {
+	public void setIdAutor(Integer idAutor) {
 		this.idAutor = idAutor;
 	}
 	public String getNombre() {
@@ -27,10 +34,10 @@ public class Autor {
 		this.apellido = apellido;
 	}
 	public String getPseudonimo() {
-		return Pseudonimo;
+		return pseudonimo;
 	}
 	public void setPseudonimo(String pseudonimo) {
-		Pseudonimo = pseudonimo;
+		this.pseudonimo = pseudonimo;
 	}
 	public String getNacionalidad() {
 		return nacionalidad;
@@ -46,6 +53,15 @@ public class Autor {
 	}
 	
 	public Autor() {
-		
+		super();
+	}
+
+	public Autor(String nombre, String apellido, String pseudonimo, String nacionalidad, String urlFoto) {
+		super();
+		this.nombre = nombre;
+		this.apellido = apellido;
+		this.pseudonimo = pseudonimo;
+		this.nacionalidad = nacionalidad;
+		this.urlFoto = urlFoto;
 	}
 }
