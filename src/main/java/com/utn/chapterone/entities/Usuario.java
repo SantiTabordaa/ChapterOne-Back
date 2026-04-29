@@ -2,15 +2,37 @@ package com.utn.chapterone.entities;
 
 public class Usuario {
 
-	private int idUsuario;
+	private Integer idUsuario;
 	private String nombre;
 	private String apellido;
+	private String email;
+	private String urlFotoPerfil;
+	private boolean admin;
 	private String username;
 	private String password;
-	public int getIdUsuario() {
+
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	public String getUrlFotoPerfil() {
+		return urlFotoPerfil;
+	}
+	public void setUrlFotoPerfil(String urlFotoPerfil) {
+		this.urlFotoPerfil = urlFotoPerfil;
+	}
+	public boolean isAdmin() {
+		return admin;
+	}
+	public void setAdmin(boolean admin) {
+		this.admin = admin;
+	}
+	public Integer getIdUsuario() {
 		return idUsuario;
 	}
-	public void setIdUsuario(int idUsuario) {
+	public void setIdUsuario(Integer idUsuario) {
 		this.idUsuario = idUsuario;
 	}
 	public String getNombre() {
@@ -39,7 +61,20 @@ public class Usuario {
 	}
 	
 	public Usuario() {
-		
+		super();
+	}
+
+	public Usuario(Integer idUsuario, String nombre, String apellido, String email, String urlFotoPerfil,
+			boolean admin, String username, String password) {
+		super();
+		this.idUsuario = idUsuario;
+		this.nombre = nombre;
+		this.apellido = apellido;
+		this.email = email;
+		this.urlFotoPerfil = urlFotoPerfil;
+		this.admin = admin;
+		this.username = username;
+		this.password = password;
 	}
 	
 	
