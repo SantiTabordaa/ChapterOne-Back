@@ -1,14 +1,24 @@
 package com.utn.chapterone.entities;
 
+import jakarta.persistence.*;
+
+@Entity
+@Table(name = "usuarios")
 public class Usuario {
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer idUsuario;
 	private String nombre;
 	private String apellido;
+	@Column(nullable=false , unique = true)
 	private String email;
 	private String urlFotoPerfil;
-	private boolean admin;
+	@Column(nullable=false)
+	private Boolean admin = false; // Por defecto, un usuario no es admin
+	@Column(nullable=false , unique = true)
 	private String username;
+	@Column(nullable=false)
 	private String password;
 
 	public String getEmail() {
@@ -23,10 +33,10 @@ public class Usuario {
 	public void setUrlFotoPerfil(String urlFotoPerfil) {
 		this.urlFotoPerfil = urlFotoPerfil;
 	}
-	public boolean isAdmin() {
+	public Boolean isAdmin() {
 		return admin;
 	}
-	public void setAdmin(boolean admin) {
+	public void setAdmin(Boolean admin) {
 		this.admin = admin;
 	}
 	public Integer getIdUsuario() {
@@ -64,10 +74,9 @@ public class Usuario {
 		super();
 	}
 
-	public Usuario(Integer idUsuario, String nombre, String apellido, String email, String urlFotoPerfil,
-			boolean admin, String username, String password) {
+	public Usuario(String nombre, String apellido, String email, String urlFotoPerfil,
+			Boolean admin, String username, String password) {
 		super();
-		this.idUsuario = idUsuario;
 		this.nombre = nombre;
 		this.apellido = apellido;
 		this.email = email;

@@ -8,6 +8,7 @@ public class PosteoClub {
 	private LocalDateTime fechaHoraCreacion;
 	private Usuario user;
 	private Club club;
+	
 	public int getIdPosteo() {
 		return idPosteo;
 	}
@@ -40,6 +41,15 @@ public class PosteoClub {
 	}
 	
 	public PosteoClub() {
+		super();
 		
+	}
+	public PosteoClub(int idPosteo, String contenido, LocalDateTime fechaHoraCreacion, Usuario user, Club club) {
+		super();
+		this.idPosteo = idPosteo;
+		this.contenido = contenido;
+		this.fechaHoraCreacion = fechaHoraCreacion;
+		this.user = user;
+		this.club = club;
 	}
 }
