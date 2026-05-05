@@ -1,7 +1,7 @@
 package com.utn.chapterone.entities;
 
 import java.time.LocalDate;
-
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
 @Entity 
@@ -15,7 +15,7 @@ public class Resena {
 	private LocalDate fechaResena;
 	@OneToOne
 	@JoinColumn(name = "idLectura",  unique = true)
-	// @JsonBackReference //evita el error de referencia circular al serializar la lectura y la resena
+	@JsonBackReference //evita el error de referencia circular al serializar la lectura y la resena
 	private Lectura lectura; 
 
 	public Integer getIdResena() {
