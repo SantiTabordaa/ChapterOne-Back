@@ -14,7 +14,7 @@ public class Resena {
 	private Double puntaje;
 	private LocalDate fechaResena;
 	@OneToOne
-	@JoinColumn(name = "idLectura",  unique = true)
+	@JoinColumn(name = "idLectura",  unique = true, nullable = false) //le decimos a jpa que la columna se va a llamar idLectura, que es unica y no puede ser nula
 	@JsonBackReference //evita el error de referencia circular al serializar la lectura y la resena
 	private Lectura lectura; 
 
