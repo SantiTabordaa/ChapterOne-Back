@@ -2,10 +2,12 @@ package com.utn.chapterone.entities;
 
 import java.time.LocalDate;
 
+import jakarta.persistence.*;
+
 @Entity 
 public class Resena {
 
-	@id
+	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer idResena;
 	private String contenido;
@@ -13,7 +15,7 @@ public class Resena {
 	private LocalDate fechaResena;
 	@OneToOne
 	@JoinColumn(name = "idLectura",  unique = true)
-	@jsonBackReference //evita el error de referencia circular al serializar la lectura y la resena
+	// @JsonBackReference //evita el error de referencia circular al serializar la lectura y la resena
 	private Lectura lectura; 
 
 	public Integer getIdResena() {

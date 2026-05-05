@@ -1,5 +1,6 @@
 package com.utn.chapterone.entities;
 import jakarta.persistence.*;
+import java.util.List;
 
 
 
@@ -21,10 +22,10 @@ public class Club {
 	@JoinColumn(name = "id_admin") // Clave foránea para Usuario (admin del club)
 	private Usuario admin; 
 	private Boolean privado = false; // Por defecto, un club no es privado
-	@oneToMany(mappedBy = "club", cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(mappedBy = "club", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<PosteoClub> posteos; // Lista de posteos asociados al club. NO CREA COLUMNA 
-	@oneToMany(mappedBy = "club", cascade = CascadeType.ALL, orphanRemoval = true)
-	private List<MiembroClub> miembros; // Lista de miembros asociados al club. NO CREA COLUMNA
+	@OneToMany(mappedBy = "club", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<Usuario> miembros; // Lista de miembros asociados al club. NO CREA COLUMNA
 
 	public Integer getIdClub() {
 		return idClub;

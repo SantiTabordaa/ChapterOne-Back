@@ -1,5 +1,6 @@
 package com.utn.chapterone.entities;
 import java.util.Date;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name="lecturas")
@@ -9,10 +10,10 @@ public class Lectura {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer idLectura;
 	@ManyToOne
-	@JoinColumn(name="idUsuario") @nullable(false)
+	@JoinColumn(name="idUsuario", nullable=false)
 	private Usuario usuario;
 	@ManyToOne
-	@JoinColumn(name="idLibro") @nullable(false)  //le decimos a jpa como se va a llamar la columna 
+	@JoinColumn(name="idLibro",nullable=false)  //le decimos a jpa como se va a llamar la columna 
 	private Libro libro;
 	private String estado; //leido,leyendo,quiero leer
 	private Date fechaIni;

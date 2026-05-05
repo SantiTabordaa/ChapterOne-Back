@@ -2,12 +2,13 @@ package com.utn.chapterone.entities;
 
 import java.util.Date;
 
-public class Membresia {
+public class Solicitud {
 
 	private Usuario user;
 	private Club club;
 	private String estado; //Puede estar Pendiente-Aceptado-Rechazado 
 	private Date fechaUnion;
+	private String rol; //opcional, se pone cuando 
 	
 	
 	public Usuario getUser() {
@@ -34,9 +35,14 @@ public class Membresia {
 	public void setFechaUnion(Date fechaUnion) {
 		this.fechaUnion = fechaUnion;
 	}
+	public String getRol() {
+		return rol;
+	}
+	public void setRol(String rol) {
+		this.rol = rol;
+	}
 	
-	
-	public Membresia() {
+	public Solicitud() {
 		
 	}
 	
