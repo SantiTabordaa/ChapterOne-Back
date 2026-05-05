@@ -1,7 +1,13 @@
 package com.utn.chapterone.entities;
 
+import jakarta.persistence.*;
+
+@Entity
+@Table(name="sagas")
 public class Saga {
 	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int idSaga;
 	private String nombre;
 	public int getIdSaga() {
