@@ -13,7 +13,8 @@ public class Autor {
 	private String pseudonimo;
 	private String nacionalidad;
 	private String urlFoto;
-
+	@ManyToMany(mappedBy = "autores", fetch = FetchType.LAZY)
+	private List<Libro> libros;
 
 	public Integer getIdAutor() {
 		return idAutor;

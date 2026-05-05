@@ -1,5 +1,7 @@
 package com.utn.chapterone.entities;
+
 import java.util.Date;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 @Entity
@@ -18,7 +20,8 @@ public class Lectura {
 	private String estado; //leido,leyendo,quiero leer
 	private Date fechaIni;
 	private Date fechaFin;
-	@OneToOne(mappedBy = "lectura", cascade = CascadeType.ALL) //le decimos a jpa que la relacion ya esta mapeada en la clase resena, y que se mapea a traves del atributo lectura de la clase resena
+	@OneToOne(mappedBy = "lectura", cascade = CascadeType.ALL, orphanRemoval = true) //le decimos a jpa que la relacion ya esta mapeada en la clase resena, y que se mapea a traves del atributo lectura de la clase resena
+	@JsonManagedReference
 	private Resena resena; //relacion uno a uno con resena, una lectura tiene una resena y una resena tiene una lectura
 	
 	public Integer getIdLectura() {
