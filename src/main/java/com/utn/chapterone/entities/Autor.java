@@ -16,6 +16,8 @@ public class Autor {
 	private String urlFoto;
 	@ManyToMany(mappedBy = "autores", fetch = FetchType.LAZY)
 	private List<Libro> libros;
+	@OneToMany(mappedBy = "club")
+	private List<HistorialClub> historialesClub;
 
 	public Integer getIdAutor() {
 		return idAutor;
@@ -53,11 +55,17 @@ public class Autor {
 	public void setUrlFoto(String urlFoto) {
 		this.urlFoto = urlFoto;
 	}
-	
+
+	public List<HistorialClub> getHistorialesClub() {
+		return historialesClub;
+	}
+	public void setHistorialesClub(List<HistorialClub> historialesClub) {
+		this.historialesClub = historialesClub;
+	}
+
 	public Autor() {
 		super();
 	}
-
 	public Autor(String nombre, String apellido, String pseudonimo, String nacionalidad, String urlFoto) {
 		super();
 		this.nombre = nombre;
@@ -66,4 +74,6 @@ public class Autor {
 		this.nacionalidad = nacionalidad;
 		this.urlFoto = urlFoto;
 	}
+	
+
 }

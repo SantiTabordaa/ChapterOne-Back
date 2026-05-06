@@ -2,9 +2,9 @@ package com.utn.chapterone.entities;
 
 import jakarta.persistence.*;
 import java.util.List;
+
 @Entity
 @Table(name = "generos")
-
 public class Genero {
 	
 	@Id
@@ -17,6 +17,9 @@ public class Genero {
 	@OneToMany(mappedBy = "genero")
 	private List<Club> clubes;
 	
+	@ManyToMany(mappedBy = "generos", fetch = FetchType.LAZY)
+	private List<Libro> libros;
+
 	public Integer getIdGenero() {
 		return idGenero;
 	}
@@ -35,6 +38,12 @@ public class Genero {
 	}
 	public List<Club> getClubes() {
 		return clubes;
+	}
+	public List<Libro> getLibros() {
+		return libros;
+	}
+	public void setLibros(List<Libro> libros) {
+		this.libros = libros;
 	}
 	
 	public Genero(int idGenero, String nombreGen) {

@@ -28,6 +28,17 @@ public class Libro {
 	)
 	private List<Autor> autores;
 	
+	@ManyToMany(fetch = FetchType.LAZY)
+	@JoinTable(
+		name = "libros_generos",
+		joinColumns = @JoinColumn(name = "idLibro"),
+		inverseJoinColumns = @JoinColumn(name = "idGenero")
+	)
+	private List<Genero> generos;
+	
+	@OneToMany(mappedBy = "libro")
+	private List<HistorialClub> historialesLibro;
+
 	public String getSinopsis() {
 		return sinopsis;
 	}
@@ -72,8 +83,27 @@ public class Libro {
 	public void setValoracion(Double valoracion) {
 		this.valoracion = valoracion;
 	}
+
+	public List<Autor> getAutores() {
+		return autores;
+	}
+	public void setAutores(List<Autor> autores) {
+		this.autores = autores;
+	}
+	public List<Genero> getGeneros() {
+		return generos;
+	}
+	public void setGeneros(List<Genero> generos) {
+		this.generos = generos;
+	}
+	public List<HistorialClub> getHistorialesLibro() {
+		return historialesLibro;
+	}
+	public void setHistorialesLibro(List<HistorialClub> historialesLibro) {
+		this.historialesLibro = historialesLibro;
+	}
 	
-	public Libro(String titulo, String sinopsis, Saga saga, Integer nroTomo, Integer cantPag, Double valoracion) {
+  	public Libro(String titulo, String sinopsis, Saga saga, Integer nroTomo, Integer cantPag, Double valoracion) {
 		super();
 		this.titulo = titulo;
 		this.sinopsis = sinopsis;
@@ -85,6 +115,6 @@ public class Libro {
 
 	public Libro() {
 		super();
-	}
-	
+
+}
 }
