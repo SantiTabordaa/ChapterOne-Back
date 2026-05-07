@@ -16,7 +16,7 @@ public class ResenaController {
     private ResenaService resenaService;
 
     @GetMapping
-    public List<Resena> obtenerTodos() {
+    public List<Resena> obtenerTodos() {    
         return resenaService.obtenerTodos();
     }
 
