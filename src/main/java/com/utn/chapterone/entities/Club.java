@@ -24,8 +24,8 @@ public class Club {
 	private Boolean privado = false; // Por defecto, un club no es privado
 	@OneToMany(mappedBy = "club", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<PosteoClub> posteos; // Lista de posteos asociados al club. NO CREA COLUMNA 
-	@OneToMany(mappedBy = "club", cascade = CascadeType.ALL, orphanRemoval = true)
-	private List<Usuario> miembros; // Lista de miembros asociados al club. NO CREA COLUMNA
+	@OneToMany(mappedBy = "club")
+    private List<HistorialClub> historialesClub;
 
 	public Integer getIdClub() {
 		return idClub;
@@ -63,7 +63,19 @@ public class Club {
 	public void setGenero(Genero genero) {
 		this.genero = genero;
 	}
-	
+	public List<PosteoClub> getPosteos() {
+		return posteos;
+	}
+	public void setPosteos(List<PosteoClub> posteos) {
+		this.posteos = posteos;
+	}
+	public List<HistorialClub> getHistorialesClub() {
+		return historialesClub;
+	}
+	public void setHistorialesClub(List<HistorialClub> historialesClub) {
+		this.historialesClub = historialesClub;
+	}
+	 
 
 
 	public Club() {

@@ -28,11 +28,11 @@ public class HistorialClubService {
     }
 
     public List<HistorialClub> obtenerPorClub(Integer clubId) {
-        return historialRepo.findByClubIdHistorial(clubId);
+        return historialRepo.findByClubIdClub(clubId);
     }
 
     public List<HistorialClub> obtenerPorLibro(Integer libroId) {
-        return historialRepo.findByLibroIdHistorial(libroId);
+        return historialRepo.findByLibroIdLibro(libroId);
     }
 
     public HistorialClub crear(HistorialClub h) {

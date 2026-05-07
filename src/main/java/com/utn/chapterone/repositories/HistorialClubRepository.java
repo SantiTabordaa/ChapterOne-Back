@@ -5,6 +5,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface HistorialClubRepository extends JpaRepository<HistorialClub, Integer> {
-    List<HistorialClub> findByClubIdHistorial(Integer IdClub);
-    List<HistorialClub> findByLibroIdHistorial(Integer IdLibro); 
+    List<HistorialClub> findByClubIdClub(Integer idClub);
+    List<HistorialClub> findByLibroIdLibro(Integer idLibro);
 }
