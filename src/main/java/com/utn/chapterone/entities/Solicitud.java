@@ -12,6 +12,7 @@ public class Solicitud {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer idSolicitud;
 	private String estado; //Puede estar Pendiente-Aceptado-Rechazado 
+	private Date fechaSolicitud;
 	private Date fechaUnion;
 	private String rol; //opcional, se pone cuando es aceptado, ya que puede ser un miembro/moderador/administrador
 	@ManyToOne
@@ -42,6 +43,12 @@ public class Solicitud {
 	public void setEstado(String estado) {
 		this.estado = estado;
 	}
+	public Date getFechaSolicitud() {
+		return fechaSolicitud;
+	}
+	public void setFechaSolicitud(Date fechaSolicitud) {
+		this.fechaSolicitud = fechaSolicitud;
+	}
 	public Date getFechaUnion() {
 		return fechaUnion;
 	}
@@ -61,8 +68,9 @@ public class Solicitud {
 	}
 
 	//Constructor completo
-	public Solicitud(String estado, Date fechaUnion, String rol, Usuario usuario, Club club) {
+	public Solicitud(String estado, Date fechaSolicitud, Date fechaUnion, String rol, Usuario usuario, Club club) {
         this.estado = estado;
+		this.fechaSolicitud = fechaSolicitud;
         this.fechaUnion = fechaUnion;
         this.rol = rol;
         this.usuario = usuario;
