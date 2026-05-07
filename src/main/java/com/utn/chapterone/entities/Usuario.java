@@ -20,9 +20,9 @@ public class Usuario {
 	private String username;
 	@Column(nullable=false)
 	private String password;
-	@ManyToOne
-	@JoinColumn(name = "id_club")
-	private Club club;
+	@OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<Solicitud> solicitudes; // Lista de solicitudes de ingreso al club con "aceptado" Muestra los clubes a los que pertenece. NO CREA COLUMNA
+	
 
 	public String getEmail() {
 		return email;
@@ -71,12 +71,6 @@ public class Usuario {
 	}
 	public void setPassword(String password) {
 		this.password = password;
-	}
-	public Club getClub() {
-		return club;
-	}
-	public void setClub(Club club) {
-		this.club = club;
 	}
 	
 	public Usuario() {

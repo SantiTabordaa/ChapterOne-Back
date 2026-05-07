@@ -25,7 +25,9 @@ public class Club {
 	@OneToMany(mappedBy = "club", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<PosteoClub> posteos; // Lista de posteos asociados al club. NO CREA COLUMNA 
 	@OneToMany(mappedBy = "club", cascade = CascadeType.ALL, orphanRemoval = true)
-	private List<Usuario> miembros; // Lista de miembros asociados al club. NO CREA COLUMNA
+	private List<Solicitud> solicitudes; // Lista de solicitudes de ingreso al club con "aceptado" Muestra los miembros. NO CREA COLUMNA
+d
+
 
 	public Integer getIdClub() {
 		return idClub;
