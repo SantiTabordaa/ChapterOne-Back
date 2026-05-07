@@ -1,5 +1,7 @@
 package com.utn.chapterone.entities;
 
+import java.util.List;
+
 import jakarta.persistence.*;
 
 @Entity
