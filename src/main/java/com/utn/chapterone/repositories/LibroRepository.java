@@ -1,13 +1,11 @@
 package com.utn.chapterone.repositories;
 
-import java.util.Optional;
+import com.utn.chapterone.entities.Libro;
 
-import com.utn.chapterone.entities.HistorialClub;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-public class LibroRepository {
-
-    public Optional<HistorialClub> findById(Integer idLibro) {
-        throw new UnsupportedOperationException("Unimplemented method 'findById'");
-    }
+@Repository
+public interface LibroRepository extends JpaRepository<Libro,Integer>{
   
 }
