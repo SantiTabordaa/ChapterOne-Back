@@ -77,7 +77,7 @@ public class Libro {
 		this.cantPag = cantPag;
 	}
 	public Double getValoracion() {
-		//Se hace un promedio con las reseñas de el libro
+		//TODO: Se hace un promedio con las reseñas de el libro
 		return valoracion;
 	}
 	public void setValoracion(Double valoracion) {

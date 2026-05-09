@@ -13,8 +13,8 @@ public class Genero {
 
 	@Column(nullable= false, unique = true)
 	private String nombreGen;
-
 	@OneToMany(mappedBy = "genero")
+	
 	private List<Club> clubes;
 	
 	@ManyToMany(mappedBy = "generos", fetch = FetchType.LAZY)

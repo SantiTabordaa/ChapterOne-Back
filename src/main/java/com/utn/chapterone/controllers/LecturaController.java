@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/lecturas")
+@RequestMapping("/api/lecturas")
 public class LecturaController {
 
     @Autowired

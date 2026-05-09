@@ -9,7 +9,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/generos")
-@CrossOrigin(origins = "http://localhost:5173") // Para conectar con tu React en Vite
+@CrossOrigin(origins = "http://localhost:5173")
 public class GeneroController {
 
     @Autowired
