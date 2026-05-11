@@ -18,6 +18,7 @@ public class Libro {
 	private Saga saga;
 	private Integer nroTomo;
 	private Integer cantPag;
+	@Transient //No lo calcula la bd, lo calculamos nosotros
 	private Double valoracion;
 
 	@ManyToMany(fetch = FetchType.LAZY)
@@ -77,14 +78,13 @@ public class Libro {
 		this.cantPag = cantPag;
 	}
 	public Double getValoracion() {
-		//TODO: Se hace un promedio con las reseñas de el libro
 		return valoracion;
 	}
 	public void setValoracion(Double valoracion) {
 		this.valoracion = valoracion;
 	}
 
-	public List<Autor> getAutores() {
+	public List<Autor> getAutores(){
 		return autores;
 	}
 	public void setAutores(List<Autor> autores) {
