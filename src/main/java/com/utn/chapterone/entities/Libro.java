@@ -18,6 +18,7 @@ public class Libro {
 	private Saga saga;
 	private Integer nroTomo;
 	private Integer cantPag;
+	private String UrlFotoPortada;
 	@Transient //No lo calcula la bd, lo calculamos nosotros
 	private Double valoracion;
 
@@ -70,6 +71,13 @@ public class Libro {
 	}
 	public void setTitulo(String titulo) {
 		this.titulo = titulo;
+	}
+
+	public String getUrlFotoPortada() {
+		return UrlFotoPortada;
+	}
+	public void setUrlFotoPortada(String urlFotoPortada) {
+		UrlFotoPortada = urlFotoPortada;
 	}
 	public Integer getCantPag() {
 		return cantPag;

@@ -57,6 +57,7 @@ public class LibroService {
         libro.setValoracion(libroActualizado.getValoracion());
         libro.setAutores(libroActualizado.getAutores());
         libro.setGeneros(libroActualizado.getGeneros());
+        libro.setUrlFotoPortada(libroActualizado.getUrlFotoPortada());
         
         return libroRepository.save(libro);
     }
