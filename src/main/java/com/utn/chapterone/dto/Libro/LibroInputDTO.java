@@ -8,8 +8,8 @@ public class LibroInputDTO {
     private Integer nroTomo;
     private Integer cantPag;
     private String saga;
-    private List<String> autores;
-    private List<String> generos;
+    private List<Integer> autoresIds;
+    private List<Integer> generosIds;
 
     // Getters y Setters
     public String getTitulo() {
@@ -52,19 +52,19 @@ public class LibroInputDTO {
         this.saga = saga;
     }
 
-    public List<String> getAutores() {
-        return autores;
+    public List<Integer> getAutoresIds() {
+        return autoresIds;
     }
 
-    public void setAutores(List<String> autores) {
-        this.autores = autores;
+    public void setAutoresIds(List<Integer> autoresIds) {
+        this.autoresIds = autoresIds;
     }
 
-    public List<String> getGeneros() {
-        return generos;
+    public List<Integer> getGenerosIds() {
+        return generosIds;
     }
 
-    public void setGeneros(List<String> generos) {
-        this.generos = generos;
+    public void setGenerosIds(List<Integer> generosIds) {
+        this.generosIds = generosIds;
     }
 }

@@ -1,7 +1,7 @@
 package com.utn.chapterone.controllers;
 
-import com.utn.chapterone.dtos.libro.LibroInputDTO;
-import com.utn.chapterone.dtos.libro.LibroOutputDTO;
+import com.utn.chapterone.dto.Libro.LibroInputDTO;
+import com.utn.chapterone.dto.Libro.LibroOutputDTO;
 import com.utn.chapterone.services.LibroService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

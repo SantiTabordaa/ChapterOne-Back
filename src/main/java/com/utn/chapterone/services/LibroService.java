@@ -1,17 +1,11 @@
 package com.utn.chapterone.services;
 
-import com.utn.chapterone.dtos.autor.AutorDTO;
-import com.utn.chapterone.dtos.libro.LibroInputDTO;
-import com.utn.chapterone.dtos.libro.LibroOutputDTO;
-import com.utn.chapterone.entities.Autor;
-import com.utn.chapterone.entities.Genero;
-import com.utn.chapterone.entities.Libro;
-import com.utn.chapterone.entities.Saga;
-import com.utn.chapterone.repositories.AutorRepository;
-import com.utn.chapterone.repositories.GeneroRepository;
-import com.utn.chapterone.repositories.LibroRepository;
-import com.utn.chapterone.repositories.LecturaRepository;
-import com.utn.chapterone.repositories.SagaRepository;
+import com.utn.chapterone.dto.autor.AutorDTO;
+import com.utn.chapterone.dto.Libro.LibroInputDTO;
+import com.utn.chapterone.dto.Libro.LibroOutputDTO;
+import com.utn.chapterone.entities.*;
+import com.utn.chapterone.repositories.*;
+
 
 import jakarta.transaction.Transactional;
 
