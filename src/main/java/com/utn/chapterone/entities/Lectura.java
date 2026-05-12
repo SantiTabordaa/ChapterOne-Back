@@ -12,10 +12,10 @@ public class Lectura {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer idLectura;
 	@ManyToOne
-	@JoinColumn(name="idUsuario", nullable=false)
+	@JoinColumn(name="id_usuario", nullable=false)
 	private Usuario usuario;
 	@ManyToOne
-	@JoinColumn(name="idLibro",nullable=false)  //le decimos a jpa como se va a llamar la columna 
+	@JoinColumn(name="id_libro",nullable=false)  //le decimos a jpa como se va a llamar la columna 
 	private Libro libro;
 	private String estado; //leido,leyendo,quiero leer
 	private Date fechaIni;

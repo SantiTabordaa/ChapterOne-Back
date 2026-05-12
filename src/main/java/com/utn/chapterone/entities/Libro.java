@@ -14,7 +14,7 @@ public class Libro {
 	private String titulo;
 	private String sinopsis;
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "idSaga")
+	@JoinColumn(name = "id_saga")
 	private Saga saga;
 	private Integer nroTomo;
 	private Integer cantPag;
@@ -24,16 +24,16 @@ public class Libro {
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(
 		name = "libros_autores",
-		joinColumns = @JoinColumn(name = "idLibro"),
-		inverseJoinColumns = @JoinColumn(name = "idAutor")
+		joinColumns = @JoinColumn(name = "id_libro"),
+		inverseJoinColumns = @JoinColumn(name = "id_autor")
 	)
 	private List<Autor> autores;
 	
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(
 		name = "libros_generos",
-		joinColumns = @JoinColumn(name = "idLibro"),
-		inverseJoinColumns = @JoinColumn(name = "idGenero")
+		joinColumns = @JoinColumn(name = "id_libro"),
+		inverseJoinColumns = @JoinColumn(name = "id_genero")
 	)
 	private List<Genero> generos;
 	
@@ -88,6 +88,7 @@ public class Libro {
 		return autores;
 	}
 	public void setAutores(List<Autor> autores) {
+
 		this.autores = autores;
 	}
 	public List<Genero> getGeneros() {
