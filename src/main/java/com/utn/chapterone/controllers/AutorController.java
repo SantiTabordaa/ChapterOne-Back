@@ -1,5 +1,6 @@
 package com.utn.chapterone.controllers;
 
+import com.utn.chapterone.dto.autor.AutorListadoDto;
 import com.utn.chapterone.entities.Autor;
 import com.utn.chapterone.services.AutorService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,11 @@ public class AutorController {
     @GetMapping
     public List<Autor> obtenerTodos() {
         return autorService.obtenerTodos();
+    }
+
+    @GetMapping("/listado")
+    public List<AutorListadoDto> obtenerListado() {
+        return autorService.obtenerListado();
     }
 
     @GetMapping("/{id}")

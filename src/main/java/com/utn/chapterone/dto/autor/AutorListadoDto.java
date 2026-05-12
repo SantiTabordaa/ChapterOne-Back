@@ -1,7 +1,7 @@
-package com.utn.chapterone.dto;
+package com.utn.chapterone.dto.autor;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import java.util.List;
+
 
 public class AutorListadoDto {
 	@JsonProperty("id_autor")
@@ -12,8 +12,10 @@ public class AutorListadoDto {
 	private String nacionalidad;
 	@JsonProperty("url_foto")
 	private String urlFoto;
+	/* 
 	@JsonProperty("books_top_5")
 	private List<LibroTop5Dto> booksTop5;
+	 */
 
 	public AutorListadoDto() {
 		super();
@@ -25,8 +27,8 @@ public class AutorListadoDto {
 			String apellido,
 			String pseudonimo,
 			String nacionalidad,
-			String urlFoto,
-			List<LibroTop5Dto> booksTop5
+			String urlFoto
+			// List<LibroTop5Dto> booksTop5 para el listado no van los 5 mejores libros
 	) {
 		super();
 		this.idAutor = idAutor;
@@ -35,7 +37,7 @@ public class AutorListadoDto {
 		this.pseudonimo = pseudonimo;
 		this.nacionalidad = nacionalidad;
 		this.urlFoto = urlFoto;
-		this.booksTop5 = booksTop5;
+		// this.booksTop5 = booksTop5;
 	}
 
 	public Integer getIdAutor() {
@@ -85,12 +87,13 @@ public class AutorListadoDto {
 	public void setUrlFoto(String urlFoto) {
 		this.urlFoto = urlFoto;
 	}
-
+	
+	/* 
 	public List<LibroTop5Dto> getBooksTop5() {
 		return booksTop5;
 	}
 
 	public void setBooksTop5(List<LibroTop5Dto> booksTop5) {
 		this.booksTop5 = booksTop5;
-	}
+	} */
 }

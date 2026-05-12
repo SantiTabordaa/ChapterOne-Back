@@ -1,10 +1,12 @@
 package com.utn.chapterone.services;
 
 import org.springframework.stereotype.Service;
+import com.utn.chapterone.dto.autor.AutorListadoDto;
 import com.utn.chapterone.entities.Autor;
 import com.utn.chapterone.repositories.AutorRepository;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class AutorService {
@@ -17,6 +19,12 @@ public class AutorService {
 
     public List<Autor> obtenerTodos() {
         return autorRepository.findAll();
+    }
+
+    public List<AutorListadoDto> obtenerListado() {
+        return autorRepository.findAll().stream()
+            .map(this::mapearAutorListado)
+            .collect(Collectors.toList());
     }
 
     public Autor obtenerPorId(Integer id) {
@@ -46,5 +54,16 @@ public class AutorService {
             .orElseThrow(() -> new RuntimeException("Autor no encontrado"));
 
         autorRepository.deleteById(id);
+    }
+
+    private AutorListadoDto mapearAutorListado(Autor autor) {
+        return new AutorListadoDto(
+            autor.getIdAutor(),
+            autor.getNombre(),
+            autor.getApellido(),
+            autor.getPseudonimo(),
+            autor.getNacionalidad(),
+            autor.getUrlFoto()
+        );
     }
 }
