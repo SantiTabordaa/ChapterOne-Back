@@ -18,6 +18,7 @@ public class Libro {
 	private Saga saga;
 	private Integer nroTomo;
 	private Integer cantPag;
+	private String urlPortada;
 	@Transient //No lo calcula la bd, lo calculamos nosotros
 	private Double valoracion;
 
@@ -46,6 +47,7 @@ public class Libro {
 	public void setSinopsis(String sinopsis) {
 		this.sinopsis = sinopsis;
 	}
+	
 	
 	public Saga getSaga() {
 		return saga;
@@ -82,6 +84,12 @@ public class Libro {
 	}
 	public void setValoracion(Double valoracion) {
 		this.valoracion = valoracion;
+	}
+	public String getUrlPortada() { 
+		return urlPortada;
+	}
+	public void setUrlPortada(String urlPortada) {
+		this.urlPortada = urlPortada;
 	}
 
 	public List<Autor> getAutores(){

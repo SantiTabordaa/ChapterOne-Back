@@ -14,7 +14,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -54,7 +53,7 @@ public class LibroService {
         libro.setSinopsis(libroInputDTO.getSinopsis());
         libro.setNroTomo(libroInputDTO.getNroTomo());
         libro.setCantPag(libroInputDTO.getCantPag());
-
+        libro.setUrlPortada(libroInputDTO.getUrlPortada());
         // Manejo de Autores
         List<Autor> autores = new ArrayList<>();
         for (Integer autorId : libroInputDTO.getAutoresIds()) {
@@ -93,6 +92,8 @@ public class LibroService {
         libro.setSinopsis(libroInputDTO.getSinopsis());
         libro.setNroTomo(libroInputDTO.getNroTomo());
         libro.setCantPag(libroInputDTO.getCantPag());
+        libro.setUrlPortada(libroInputDTO.getUrlPortada());
+        
 
         // Actualización de Autores
         List<Autor> autores = new ArrayList<>();
@@ -138,7 +139,7 @@ public class LibroService {
         dto.setSinopsis(libro.getSinopsis());
         dto.setNroTomo(libro.getNroTomo());
         dto.setCantPag(libro.getCantPag());
-
+        dto.setUrlPortada(libro.getUrlPortada());
         Double valoracion = lecturaRepository.obtenerValoracionPromedio(libro.getIdLibro());
         dto.setValoracion(valoracion != null ? Math.round(valoracion * 100.0) / 100.0 : 0.0);
 

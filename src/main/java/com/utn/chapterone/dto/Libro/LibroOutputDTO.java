@@ -12,6 +12,7 @@ public class LibroOutputDTO {
     private Integer cantPag;
     private Double valoracion;
     private String saga;
+    private String urlPortada;
     private List<AutorDTO> autores;
     private List<String> generos;
 
@@ -32,6 +33,12 @@ public class LibroOutputDTO {
         this.titulo = titulo;
     }
 
+    public String getUrlPortada() {
+        return urlPortada;
+    }
+    public void setUrlPortada(String urlPortada) {
+        this.urlPortada = urlPortada;
+    }
     public String getSinopsis() {
         return sinopsis;
     }

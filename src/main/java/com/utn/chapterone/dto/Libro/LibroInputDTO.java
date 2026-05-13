@@ -8,6 +8,7 @@ public class LibroInputDTO {
     private Integer nroTomo;
     private Integer cantPag;
     private String saga;
+    private String urlPortada;
     private List<Integer> autoresIds;
     private List<Integer> generosIds;
 
@@ -18,6 +19,13 @@ public class LibroInputDTO {
 
     public void setTitulo(String titulo) {
         this.titulo = titulo;
+    }
+
+    public String getUrlPortada() {
+        return urlPortada;
+    }
+    public void setUrlPortada(String urlPortada) {
+        this.urlPortada = urlPortada;
     }
 
     public String getSinopsis() {
