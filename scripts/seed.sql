@@ -3,9 +3,12 @@
 
 SET FOREIGN_KEY_CHECKS=0;
 
+use chapter_one;
+
 DELETE FROM resena;
 DELETE FROM lecturas;
-DELETE FROM historial_club;
+D
+ELETE FROM historial_club;
 DELETE FROM posteos_club;
 DELETE FROM solicitudes;
 DELETE FROM club;
