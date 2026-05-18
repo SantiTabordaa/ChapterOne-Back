@@ -1,5 +1,6 @@
 package com.utn.chapterone.controllers;
 
+import com.utn.chapterone.dto.autor.AutorDetalleDto;
 import com.utn.chapterone.dto.autor.AutorListadoDto;
 import com.utn.chapterone.entities.Autor;
 import com.utn.chapterone.services.AutorService;
@@ -27,7 +28,7 @@ public class AutorController {
     }
 
     @GetMapping("/{id}")
-    public Autor obtenerPorId(@PathVariable Integer id) {
+    public AutorDetalleDto obtenerPorId(@PathVariable Integer id) {
         return autorService.obtenerPorId(id);
     }
 

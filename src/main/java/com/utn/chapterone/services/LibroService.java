@@ -149,6 +149,7 @@ public class LibroService {
 
         dto.setAutores(libro.getAutores().stream().map(autor -> {
             AutorDTO autorDTO = new AutorDTO();
+            autorDTO.setIdAutor(autor.getIdAutor());
             autorDTO.setNombre(autor.getNombre());
             autorDTO.setApellido(autor.getApellido());
             return autorDTO;
