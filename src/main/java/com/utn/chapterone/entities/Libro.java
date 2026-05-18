@@ -112,13 +112,14 @@ public class Libro {
 		this.historialesLibro = historialesLibro;
 	}
 	
-  	public Libro(String titulo, String sinopsis, Saga saga, Integer nroTomo, Integer cantPag, Double valoracion) {
+  	public Libro(String titulo, String sinopsis, Saga saga, Integer nroTomo, Integer cantPag, Double valoracion, String urlPortada) {
 		super();
 		this.titulo = titulo;
 		this.sinopsis = sinopsis;
 		this.saga = saga;
 		this.nroTomo = nroTomo;
 		this.cantPag = cantPag;
+		this.urlPortada = urlPortada;
 		this.valoracion = valoracion;
 	}
 
