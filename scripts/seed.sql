@@ -7,8 +7,7 @@ use chapter_one;
 
 DELETE FROM resena;
 DELETE FROM lecturas;
-D
-ELETE FROM historial_club;
+DELETE FROM historial_club;
 DELETE FROM posteos_club;
 DELETE FROM solicitudes;
 DELETE FROM club;
@@ -35,18 +34,18 @@ INSERT INTO sagas (id_saga, nombre) VALUES
   (3, 'Sherlock Holmes');
 
 INSERT INTO autores (id_autor, nombre, apellido, pseudonimo, nacionalidad, url_foto) VALUES
-  (1, 'Jorge', 'Borges', 'Borges', 'Argentina', 'https://example.com/jorge-borges.jpg'),
-  (2, 'Julio', 'Cortazar', 'Julio', 'Argentina', 'https://example.com/julio-cortazar.jpg'),
-  (3, 'Agatha', 'Christie', 'Agatha', 'Reino Unido', 'https://example.com/agatha-christie.jpg'),
-  (4, 'Isaac', 'Asimov', 'Isaac', 'Rusia', 'https://example.com/isaac-asimov.jpg'),
-  (5, 'Laura', 'Gallego', 'Laura', 'Espana', 'https://example.com/laura-gallego.jpg');
+  (1, 'Jorge', 'Borges', 'Borges', 'Argentina', '/uploads/autores/jorge-borges.jpg'),
+  (2, 'Julio', 'Cortazar', 'Julio', 'Argentina', '/uploads/autores/julio-cortazar.jpg'),
+  (3, 'Agatha', 'Christie', 'Agatha', 'Reino Unido', '/uploads/autores/agatha-christie.jpg'),
+  (4, 'Isaac', 'Asimov', 'Isaac', 'Rusia', '/uploads/autores/isaac-asimov.jpg'),
+  (5, 'Laura', 'Gallego', 'Laura', 'Espana', '/uploads/autores/laura-gallego.jpg');
 
-INSERT INTO libros (id_libro, titulo, sinopsis, id_saga, nro_tomo, cant_pag) VALUES
-  (1, 'El Aleph', 'Relatos clasicos', NULL, NULL, 160),
-  (2, 'Rayuela', 'Novela de estructura libre', NULL, NULL, 736),
-  (3, 'Asesinato en el Orient Express', 'Misterio en un tren', NULL, NULL, 256),
-  (4, 'Fundacion', 'Nacimiento de una ciencia', 2, 1, 255),
-  (5, 'La Torre de Marfil', 'Fantasia juvenil', 1, 1, 320);
+INSERT INTO libros (id_libro, titulo, sinopsis, id_saga, nro_tomo, cant_pag, url_portada) VALUES
+  (1, 'El Aleph', 'Relatos clasicos', NULL, NULL, 160, '/uploads/libros/el-aleph.jpg'),
+  (2, 'Rayuela', 'Novela de estructura libre', NULL, NULL, 736, '/uploads/libros/rayuela.jpg'),
+  (3, 'Asesinato en el Orient Express', 'Misterio en un tren', NULL, NULL, 256, '/uploads/libros/asesinato-en-el-orient-express.jpg'),
+  (4, 'Fundacion', 'Nacimiento de una ciencia', 2, 1, 255, '/uploads/libros/fundacion.jpg'),
+  (5, 'La Torre de Marfil', 'Fantasia juvenil', 1, 1, 320, '/uploads/libros/la-torre-de-marfil.jpg');
 
 INSERT INTO libros_autores (id_libro, id_autor) VALUES
   (1, 1),
