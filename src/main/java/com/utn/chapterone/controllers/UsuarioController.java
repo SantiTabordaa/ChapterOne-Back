@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:5173")
 @RequestMapping("/api/usuarios")
 public class UsuarioController {
 
@@ -24,10 +25,10 @@ public class UsuarioController {
         return usuarioService.obtenerPorId(id);
     }
 
-    @PostMapping("")
-    public Usuario save(@RequestBody Usuario usuario) {
-        return usuarioService.crear(usuario);
-    }
+    // @PostMapping("")
+    // public Usuario save(@RequestBody Usuario usuario) {
+    //     return usuarioService.crear(usuario);
+    // } Comentado ya que lo va a manejar AuthController
 
     @PutMapping("/{id}")
     public Usuario update(@PathVariable Integer id, @RequestBody Usuario usuario) {

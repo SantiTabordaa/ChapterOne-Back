@@ -7,8 +7,7 @@ use chapter_one;
 
 DELETE FROM resena;
 DELETE FROM lecturas;
-D
-ELETE FROM historial_club;
+DELETE FROM historial_club;
 DELETE FROM posteos_club;
 DELETE FROM solicitudes;
 DELETE FROM club;

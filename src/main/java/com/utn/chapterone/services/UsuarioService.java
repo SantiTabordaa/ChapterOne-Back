@@ -4,6 +4,7 @@ import com.utn.chapterone.entities.Usuario;
 import com.utn.chapterone.repositories.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.util.List;
 
@@ -22,8 +23,24 @@ public class UsuarioService {
                 .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
     }
 
-    public Usuario crear(Usuario usuario) {
-        return usuarioRepository.save(usuario);
+    public Boolean existeUsuario(String username){
+        if(usuarioRepository.existsByUsername(username)){
+            return true;
+        }
+        return false;
+    }
+
+    public Usuario register(Usuario usuario) {
+        boolean exists = existeUsuario(usuario.getUsername());
+
+        if (exists){
+            return null;
+        }
+        else{
+            BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+            usuario.setPassword(encoder.encode(usuario.getPassword()));
+            return usuarioRepository.save(usuario);
+        }
     }
 
     public Usuario actualizar(Integer id, Usuario usuarioActualizado) {
