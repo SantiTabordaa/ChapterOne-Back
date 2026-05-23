@@ -1,6 +1,6 @@
 package com.utn.chapterone.entities;
 
-import java.sql.Date;
+// import java.sql.Date;
 import java.util.List;
 
 import jakarta.persistence.*;
@@ -14,7 +14,7 @@ public class Usuario {
 	private Integer idUsuario;
 	private String nombre;
 	private String apellido;
-	private Date fechaNacimiento;
+	//private Date fechaNacimiento;
 	@Column(nullable=false , unique = true)
 	private String email;
 	private String urlFotoPerfil;
@@ -76,12 +76,12 @@ public class Usuario {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	public Date getFechaNacimiento() {
-		return fechaNacimiento;
-	}
-	public void setFechaNacimiento(Date fechaNacimiento) {
-		this.fechaNacimiento = fechaNacimiento;
-	}
+	// public Date getFechaNacimiento() {
+	// 	return fechaNacimiento;
+	// }
+	// public void setFechaNacimiento(Date fechaNacimiento) {
+	// 	this.fechaNacimiento = fechaNacimiento;
+	// }
 	
 	public Usuario() {
 		super();
