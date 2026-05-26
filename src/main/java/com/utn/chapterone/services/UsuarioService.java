@@ -5,6 +5,8 @@ import com.utn.chapterone.repositories.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.web.server.ResponseStatusException;
+import org.springframework.http.HttpStatus;
 
 import java.util.List;
 
@@ -31,16 +33,13 @@ public class UsuarioService {
     }
 
     public Usuario register(Usuario usuario) {
-        boolean exists = existeUsuario(usuario.getUsername());
+        if (existeUsuario(usuario.getUsername())) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "El usuario ya existe");
+        }
 
-        if (exists){
-            return null;
-        }
-        else{
-            BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-            usuario.setPassword(encoder.encode(usuario.getPassword()));
-            return usuarioRepository.save(usuario);
-        }
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        usuario.setPassword(encoder.encode(usuario.getPassword()));
+        return usuarioRepository.save(usuario);
     }
 
     public Usuario actualizar(Integer id, Usuario usuarioActualizado) {
