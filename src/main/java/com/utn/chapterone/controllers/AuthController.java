@@ -3,10 +3,10 @@ package com.utn.chapterone.controllers;
 import com.utn.chapterone.dto.usuario.UsuarioRegistroDTO;
 import com.utn.chapterone.entities.Usuario;
 import com.utn.chapterone.services.UsuarioService;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 
 
 @RestController
@@ -24,10 +24,6 @@ public class AuthController {
     public ResponseEntity<UsuarioRegistroDTO> register(@RequestBody Usuario usuario) {
         Usuario created = usuarioService.register(usuario);
         UsuarioRegistroDTO createdFiltrado = new UsuarioRegistroDTO(created);
-        // createdFiltrado.setNombre(created.getNombre());
-        // createdFiltrado.setApellido(created.getApellido());
-        // createdFiltrado.setEmail(created.getEmail());
-        // createdFiltrado.setUsername(created.getUsername());
         return ResponseEntity.status(HttpStatus.CREATED).body(createdFiltrado);
     }
     
