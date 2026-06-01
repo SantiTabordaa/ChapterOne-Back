@@ -4,12 +4,12 @@ import com.utn.chapterone.entities.Usuario;
 import com.utn.chapterone.repositories.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.http.HttpStatus;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UsuarioService {
@@ -39,6 +39,10 @@ public class UsuarioService {
             return true;
         }
         return false;
+    }
+
+    public Optional<Usuario> obtenerPorUsername(String username) {
+        return usuarioRepository.findByUsername(username);
     }
 
     public Usuario register(Usuario usuario) {
