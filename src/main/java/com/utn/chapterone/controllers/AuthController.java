@@ -2,6 +2,7 @@ package com.utn.chapterone.controllers;
 
 import com.utn.chapterone.dto.auth.AuthResponse;
 import com.utn.chapterone.dto.auth.LoginRequest;
+import com.utn.chapterone.dto.auth.RegisterRequest;
 import com.utn.chapterone.dto.usuario.UsuarioRegistroDTO;
 import com.utn.chapterone.entities.Usuario;
 import com.utn.chapterone.security.JwtService;
@@ -35,15 +36,15 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<UsuarioRegistroDTO> register(@RequestBody Usuario usuario) {
-        Usuario created = usuarioService.register(usuario);
+    public ResponseEntity<UsuarioRegistroDTO> register(@RequestBody RegisterRequest registerRequest) {
+        Usuario created = usuarioService.register(registerRequest);
         UsuarioRegistroDTO createdFiltrado = new UsuarioRegistroDTO(created);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdFiltrado);
     }
 
     @PostMapping("/login")
     public ResponseEntity<AuthResponse> login(@RequestBody LoginRequest request) {
-        Usuario usuario = usuarioService.obtenerPorUsername(request.getUsername())
+        Usuario usuario = usuarioService.obtenerPorUsername(request.getUsername()) //TODO: cambiar a bloque try catch
                 .orElseThrow(() -> new org.springframework.web.server.ResponseStatusException(
                         HttpStatus.UNAUTHORIZED,
                         "Credenciales inválidas."

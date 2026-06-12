@@ -1,5 +1,6 @@
 package com.utn.chapterone.services;
 
+import com.utn.chapterone.dto.auth.RegisterRequest;
 import com.utn.chapterone.entities.Usuario;
 import com.utn.chapterone.repositories.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,19 +46,25 @@ public class UsuarioService {
         return usuarioRepository.findByUsername(username);
     }
 
-    public Usuario register(Usuario usuario) {
-        if (existeUsuario(usuario.getUsername())) {
+    public Usuario register(RegisterRequest registerRequest) {
+        if (existeUsuario(registerRequest.getUsername())) {
             throw new ResponseStatusException(HttpStatus.CONFLICT, "El usuario ya existe.");
         }
-        if (existeEmail(usuario.getEmail())){
+        if (existeEmail(registerRequest.getEmail())){
             throw new ResponseStatusException(HttpStatus.CONFLICT, "El correo ya está registrado.");
         }
 
+        Usuario usuario = new Usuario();
 
-        // BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-        // usuario.setPassword(encoder.encode(usuario.getPassword()));
-
-        usuario.setPassword(passwordEncoder.encode(usuario.getPassword()));
+        usuario.setNombre(registerRequest.getNombre());
+        usuario.setApellido(registerRequest.getApellido());
+        usuario.setEmail(registerRequest.getEmail());
+        usuario.setUsername(registerRequest.getUsername());
+        usuario.setAdmin(false);
+        //TODO: hacer funcion que guarde la foto y setee este atributo con la ruta.
+        usuario.setUrlFotoPerfil("not implemented"); 
+        // encoder de password
+        usuario.setPassword(passwordEncoder.encode(registerRequest.getPassword()));
         return usuarioRepository.save(usuario);
     }
 
