@@ -47,25 +47,48 @@ public class UsuarioService {
     }
 
     public Usuario register(RegisterRequest registerRequest) {
-        if (existeUsuario(registerRequest.getUsername())) {
-            throw new ResponseStatusException(HttpStatus.CONFLICT, "El usuario ya existe.");
-        }
-        if (existeEmail(registerRequest.getEmail())){
-            throw new ResponseStatusException(HttpStatus.CONFLICT, "El correo ya está registrado.");
-        }
+        if(validar_campos(registerRequest)){
+            if (existeUsuario(registerRequest.getUsername())) {
+                throw new ResponseStatusException(HttpStatus.CONFLICT, "El usuario ya existe.");
+            }
+            if (existeEmail(registerRequest.getEmail())){
+                throw new ResponseStatusException(HttpStatus.CONFLICT, "El correo ya está registrado.");
+            }
 
-        Usuario usuario = new Usuario();
+            Usuario usuario = new Usuario();
 
-        usuario.setNombre(registerRequest.getNombre());
-        usuario.setApellido(registerRequest.getApellido());
-        usuario.setEmail(registerRequest.getEmail());
-        usuario.setUsername(registerRequest.getUsername());
-        usuario.setAdmin(false);
-        //TODO: hacer funcion que guarde la foto y setee este atributo con la ruta.
-        usuario.setUrlFotoPerfil("not implemented"); 
-        // encoder de password
-        usuario.setPassword(passwordEncoder.encode(registerRequest.getPassword()));
-        return usuarioRepository.save(usuario);
+            usuario.setNombre(registerRequest.getNombre());
+            usuario.setApellido(registerRequest.getApellido());
+            usuario.setEmail(registerRequest.getEmail());
+            usuario.setUsername(registerRequest.getUsername());
+            usuario.setAdmin(false);
+            //TODO: hacer funcion que guarde la foto y setee este atributo con la ruta.
+            usuario.setUrlFotoPerfil("not implemented"); 
+            // encoder de password
+            usuario.setPassword(passwordEncoder.encode(registerRequest.getPassword()));
+            return usuarioRepository.save(usuario);
+        } else {
+            return null;
+        }
+    }
+
+    private Boolean validar_campos(RegisterRequest peticion){
+        if(peticion.getApellido() == null){
+            return false;
+        }
+        if(peticion.getNombre() == null){
+            return false;
+        }
+        if(peticion.getEmail() == null){
+            return false;
+        }
+        if(peticion.getUsername() == null){
+            return false;
+        }
+        if(peticion.getPassword() == null){
+            return false;
+        }
+        return true;
     }
 
     public Usuario actualizar(Integer id, Usuario usuarioActualizado) {
