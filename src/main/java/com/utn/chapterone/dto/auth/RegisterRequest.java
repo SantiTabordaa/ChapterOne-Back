@@ -6,7 +6,8 @@ public class RegisterRequest {
     private String email;
     private String username;
     private String password;
-    private String urlPortada;
+    private String urlFotoPerfil;
+
     public String getNombre() {
         return nombre;
     }
@@ -37,11 +38,11 @@ public class RegisterRequest {
     public void setPassword(String password) {
         this.password = password;
     }
-    public String getUrlPortada() {
-        return urlPortada;
+    public String getUrlFotoPerfil() {
+        return urlFotoPerfil;
     }
-    public void setUrlPortada(String urlPortada) {
-        this.urlPortada = urlPortada;
+    public void setUrlFotoPerfil(String urlFotoPerfil) {
+        this.urlFotoPerfil = urlFotoPerfil;
     }
 
     
