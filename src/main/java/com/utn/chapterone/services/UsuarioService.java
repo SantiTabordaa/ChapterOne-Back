@@ -1,5 +1,6 @@
 package com.utn.chapterone.services;
 
+import com.utn.chapterone.dto.auth.RegisterRequest;
 import com.utn.chapterone.entities.Usuario;
 import com.utn.chapterone.repositories.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,20 +46,49 @@ public class UsuarioService {
         return usuarioRepository.findByUsername(username);
     }
 
-    public Usuario register(Usuario usuario) {
-        if (existeUsuario(usuario.getUsername())) {
-            throw new ResponseStatusException(HttpStatus.CONFLICT, "El usuario ya existe.");
+    public Usuario register(RegisterRequest registerRequest) {
+        if(validar_campos(registerRequest)){
+            if (existeUsuario(registerRequest.getUsername())) {
+                throw new ResponseStatusException(HttpStatus.CONFLICT, "El usuario ya existe.");
+            }
+            if (existeEmail(registerRequest.getEmail())){
+                throw new ResponseStatusException(HttpStatus.CONFLICT, "El correo ya está registrado.");
+            }
+
+            Usuario usuario = new Usuario();
+
+            usuario.setNombre(registerRequest.getNombre());
+            usuario.setApellido(registerRequest.getApellido());
+            usuario.setEmail(registerRequest.getEmail());
+            usuario.setUsername(registerRequest.getUsername());
+            usuario.setAdmin(false);
+            //TODO: hacer funcion que guarde la foto y setee este atributo con la ruta.
+            usuario.setUrlFotoPerfil("not implemented"); 
+            // encoder de password
+            usuario.setPassword(passwordEncoder.encode(registerRequest.getPassword()));
+            return usuarioRepository.save(usuario);
+        } else {
+            return null;
         }
-        if (existeEmail(usuario.getEmail())){
-            throw new ResponseStatusException(HttpStatus.CONFLICT, "El correo ya está registrado.");
+    }
+
+    private Boolean validar_campos(RegisterRequest peticion){
+        if(peticion.getApellido() == null){
+            return false;
         }
-
-
-        // BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-        // usuario.setPassword(encoder.encode(usuario.getPassword()));
-
-        usuario.setPassword(passwordEncoder.encode(usuario.getPassword()));
-        return usuarioRepository.save(usuario);
+        if(peticion.getNombre() == null){
+            return false;
+        }
+        if(peticion.getEmail() == null){
+            return false;
+        }
+        if(peticion.getUsername() == null){
+            return false;
+        }
+        if(peticion.getPassword() == null){
+            return false;
+        }
+        return true;
     }
 
     public Usuario actualizar(Integer id, Usuario usuarioActualizado) {
