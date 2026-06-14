@@ -18,7 +18,7 @@ public class Libro {
 	private Saga saga;
 	private Integer nroTomo;
 	private Integer cantPag;
-	private String UrlFotoPortada;
+	private String urlPortada;
 	@Transient //No lo calcula la bd, lo calculamos nosotros
 	private Double valoracion;
 
@@ -48,6 +48,7 @@ public class Libro {
 		this.sinopsis = sinopsis;
 	}
 	
+	
 	public Saga getSaga() {
 		return saga;
 	}
@@ -72,13 +73,6 @@ public class Libro {
 	public void setTitulo(String titulo) {
 		this.titulo = titulo;
 	}
-
-	public String getUrlFotoPortada() {
-		return UrlFotoPortada;
-	}
-	public void setUrlFotoPortada(String urlFotoPortada) {
-		UrlFotoPortada = urlFotoPortada;
-	}
 	public Integer getCantPag() {
 		return cantPag;
 	}
@@ -90,6 +84,12 @@ public class Libro {
 	}
 	public void setValoracion(Double valoracion) {
 		this.valoracion = valoracion;
+	}
+	public String getUrlPortada() { 
+		return urlPortada;
+	}
+	public void setUrlPortada(String urlPortada) {
+		this.urlPortada = urlPortada;
 	}
 
 	public List<Autor> getAutores(){
@@ -112,13 +112,14 @@ public class Libro {
 		this.historialesLibro = historialesLibro;
 	}
 	
-  	public Libro(String titulo, String sinopsis, Saga saga, Integer nroTomo, Integer cantPag, Double valoracion) {
+  	public Libro(String titulo, String sinopsis, Saga saga, Integer nroTomo, Integer cantPag, Double valoracion, String urlPortada) {
 		super();
 		this.titulo = titulo;
 		this.sinopsis = sinopsis;
 		this.saga = saga;
 		this.nroTomo = nroTomo;
 		this.cantPag = cantPag;
+		this.urlPortada = urlPortada;
 		this.valoracion = valoracion;
 	}
 

@@ -36,7 +36,6 @@ public class HistorialClubService {
     }
 
     public HistorialClub crear(HistorialClub h) {
-        // validar existencia de club y libro
         clubRepo.findById(h.getClub().getIdClub()).orElseThrow(() -> new RuntimeException("Club no encontrado"));
         libroRepo.findById(h.getLibro().getIdLibro()).orElseThrow(() -> new RuntimeException("Libro no encontrado"));
         return historialRepo.save(h);
