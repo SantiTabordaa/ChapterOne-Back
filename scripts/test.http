@@ -1,0 +1,23 @@
+POST http://localhost:8080/api/auth/register
+content-type: application/json
+
+{
+	"nombre": "francisco",
+    "apellido":"figueroa",
+    "email":"ffigueroa@frro.utn.edu.ar",
+    "admin":true,
+    "username": "franfig",
+    "password": "minchulin"
+}
+
+
+
+###
+
+POST http://localhost:8080/api/auth/login
+content-type: application/json
+
+{
+    "username": "franfig",
+    "password": "minchulin"
+}
