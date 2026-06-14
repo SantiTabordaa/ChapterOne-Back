@@ -68,7 +68,7 @@ public class UsuarioService {
             usuario.setPassword(passwordEncoder.encode(registerRequest.getPassword()));
             return usuarioRepository.save(usuario);
         } else {
-            return null;
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Faltan campos requeridos.");
         }
     }
 
@@ -101,8 +101,11 @@ public class UsuarioService {
         usuario.setUrlFotoPerfil(usuarioActualizado.getUrlFotoPerfil());
         usuario.setAdmin(usuarioActualizado.isAdmin());
         usuario.setUsername(usuarioActualizado.getUsername());
-        usuario.setPassword(passwordEncoder.encode(usuarioActualizado.getPassword()));
-        
+        // revisamos si el nuevo json trae una password y si lo hace proceder con el nuevo hasheo
+        String newPassword = usuarioActualizado.getPassword();
+         if (newPassword != null && !newPassword.isBlank()) {
+             usuario.setPassword(passwordEncoder.encode(newPassword));
+         }
         return usuarioRepository.save(usuario);
     }
 
