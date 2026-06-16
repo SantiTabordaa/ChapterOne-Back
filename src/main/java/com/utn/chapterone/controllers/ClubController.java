@@ -1,5 +1,6 @@
 package com.utn.chapterone.controllers;
 
+import com.utn.chapterone.dto.club.ClubListadoDTO;
 import com.utn.chapterone.entities.Club;
 import com.utn.chapterone.services.ClubService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,12 @@ public class ClubController {
     @GetMapping
     public List<Club> obtenerTodos() {
         return clubService.obtenerTodos();
+    }
+
+    // Traigo todos los clubes con el DTO de listado
+    @GetMapping("/listado")
+    public List<ClubListadoDTO> obtenerTodosListado() {
+        return clubService.obtenerTodosListado();
     }
 
     // Traigo un club por ID
