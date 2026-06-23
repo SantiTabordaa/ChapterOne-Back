@@ -8,6 +8,18 @@ public class RegisterRequest {
     private String password;
     private String urlFotoPerfil;
 
+    public RegisterRequest() {
+    }
+
+    public RegisterRequest(String nombre, String apellido, String email, String username, String password, String urlFotoPerfil) {
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.email = email;
+        this.username = username;
+        this.password = password;
+        this.urlFotoPerfil = urlFotoPerfil;
+    }
+
     public String getNombre() {
         return nombre;
     }

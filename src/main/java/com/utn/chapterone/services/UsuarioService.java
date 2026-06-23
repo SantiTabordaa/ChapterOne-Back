@@ -62,8 +62,7 @@ public class UsuarioService {
             usuario.setEmail(registerRequest.getEmail());
             usuario.setUsername(registerRequest.getUsername());
             usuario.setAdmin(false);
-            //TODO: hacer funcion que guarde la foto y setee este atributo con la ruta.
-            usuario.setUrlFotoPerfil("not implemented"); 
+            usuario.setUrlFotoPerfil(registerRequest.getUrlFotoPerfil()); 
             // encoder de password
             usuario.setPassword(passwordEncoder.encode(registerRequest.getPassword()));
             return usuarioRepository.save(usuario);
