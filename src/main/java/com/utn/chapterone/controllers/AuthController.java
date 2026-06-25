@@ -120,7 +120,9 @@ public class AuthController {
 
         String token = jwtService.generateToken(
                 usuario.getUsername(),
-                Map.of("admin", usuario.isAdmin())
+                Map.of(
+                    "admin", usuario.isAdmin(),
+                    "urlFotoPerfil", usuario.getUrlFotoPerfil())
         );
 
         AuthResponse response = new AuthResponse(token, jwtService.getExpirationMs());
