@@ -82,6 +82,7 @@ public class AuthController {
             response.put("nombreFinalArchivo", fileName);
         } else {
             response.put("archivoRecibido", "null");
+            rutaCompleta = Path.of("noPhotoSelected");
         }
         String urlFotoPerfil = (rutaCompleta != null) ? rutaCompleta.toString() : null;
         // Creacion de la RegisterRequest
