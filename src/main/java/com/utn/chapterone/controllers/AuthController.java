@@ -33,6 +33,7 @@ public class AuthController {
     private final JwtService jwtService;
     private final PasswordEncoder passwordEncoder;
     private final String UPLOAD_DIR = Paths.get(System.getProperty("user.home"), "uploads", "profileImage").toString();
+    private final String GET_AVATAR_URL = "http://localhost:8080/images/profile/";
 
     public AuthController(
             UsuarioService usuarioService,
@@ -59,6 +60,7 @@ public class AuthController {
             response.put("usuario", username);
 
             Path rutaCompleta = null;
+            String rutaDB = null;
         
             if(file != null && !file.isEmpty()){
             // GUARDADO DEL ARCHIVO:
@@ -69,7 +71,12 @@ public class AuthController {
             String fileName = username + "_profile" + extension;
 
             Path rutaDirectorio = Paths.get(UPLOAD_DIR);
+            
             rutaCompleta = rutaDirectorio.resolve(fileName);
+            
+            rutaDB = GET_AVATAR_URL + fileName;
+            //DEBUG
+            System.out.println(rutaDB);
 
             if(!Files.exists(rutaDirectorio)){
                 Files.createDirectories(rutaDirectorio);
@@ -82,11 +89,10 @@ public class AuthController {
             response.put("nombreFinalArchivo", fileName);
         } else {
             response.put("archivoRecibido", "null");
-            rutaCompleta = Path.of("noPhotoSelected");
+            rutaDB = "noPhotoSelected";
         }
-        String urlFotoPerfil = (rutaCompleta != null) ? rutaCompleta.toString() : null;
         // Creacion de la RegisterRequest
-        RegisterRequest registerRequest = new RegisterRequest(nombre, apellido, email, username, password, urlFotoPerfil);
+        RegisterRequest registerRequest = new RegisterRequest(nombre, apellido, email, username, password, rutaDB);
         // guardado en persistencia
         usuarioService.register(registerRequest);
              
