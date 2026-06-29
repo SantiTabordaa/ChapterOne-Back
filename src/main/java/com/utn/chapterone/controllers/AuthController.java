@@ -1,26 +1,33 @@
 package com.utn.chapterone.controllers;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.util.StringUtils;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
+
 import com.utn.chapterone.dto.auth.AuthResponse;
 import com.utn.chapterone.dto.auth.LoginRequest;
 import com.utn.chapterone.dto.auth.RegisterRequest;
 import com.utn.chapterone.entities.Usuario;
 import com.utn.chapterone.security.JwtService;
 import com.utn.chapterone.services.UsuarioService;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-import java.util.Objects;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
-import java.nio.file.Path;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.util.HashMap;
-import java.util.Map;
 
 
 
@@ -54,14 +61,19 @@ public class AuthController {
         @RequestParam("username") String username,
         @RequestParam("password") String password
     ) {
+        if(!password.matches("^(?=.*[a-z])(?=.*[A-Z]).{8,}$")){
+                Map<String, Object> errorResponse = new HashMap<>();
+                errorResponse.put("status", "error");
+                errorResponse.put("message", "La contraseña no cumple con los requisitos mínimos de seguridad.");
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
+        }
         try {
-            Map<String, Object> response = new HashMap<>();
-            response.put("status", "success");
-            response.put("usuario", username);
-
+            
+            
             Path rutaCompleta = null;
             String rutaDB = null;
-        
+            Map<String, Object> response = new HashMap<>();
+
             if(file != null && !file.isEmpty()){
             // GUARDADO DEL ARCHIVO:
             // limpiar archivo viejo (evitar ataques pathTraversal)
@@ -84,6 +96,8 @@ public class AuthController {
 
             // guardado en disco
             Files.copy(file.getInputStream(), rutaCompleta,StandardCopyOption.REPLACE_EXISTING);
+            response.put("status", "success");
+            response.put("usuario", username);
             response.put("archivoRecibido", originalFilename);
             // DEBUG
             response.put("nombreFinalArchivo", fileName);
