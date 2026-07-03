@@ -224,6 +224,12 @@ INSERT INTO lecturas (id_lectura, id_usuario, id_libro, estado, fecha_ini, fecha
   (21, 9, 22, 'quiero leer', '2026-05-24 16:05:00', NULL),
   (22, 10, 19, 'leido', '2026-05-25 11:40:00', '2026-06-01 22:10:00');
 
+## no usar, prueba para readlist
+INSERT INTO lecturas (id_lectura, id_usuario, id_libro, estado, fecha_ini, fecha_fin) VALUES
+  (1, 4, 4, 'leido', '2026-03-01', '2026-03-20'),
+  (2, 4, 3, 'leyendo', '2026-04-01', NULL);
+INSERT INTO lecturas (id_lectura, id_usuario, id_libro, estado, fecha_ini, fecha_fin) values (3, 4, 1, 'quiero leer', NULL, NULL);
+
 INSERT INTO resena (id_resena, contenido, puntaje, fecha_resena, id_lectura) VALUES
   (1, 'Excelente lectura, muy potente en ideas y simbolismo', 4.5, '2026-03-21', 1),
   (2, 'Misterio muy bien armado y con gran final', 4.8, '2026-04-13', 3),
