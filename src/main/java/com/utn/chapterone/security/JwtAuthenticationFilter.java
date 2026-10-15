@@ -1,7 +1,7 @@
 package com.utn.chapterone.security;
 
 import com.utn.chapterone.entities.Usuario;
-import com.utn.chapterone.services.UsuarioService;
+import com.utn.chapterone.repositories.UsuarioRepository;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -22,11 +22,11 @@ import java.util.Optional;
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private final JwtService jwtService;
-    private final UsuarioService usuarioService;
+    private final UsuarioRepository usuarioRepository;
 
-    public JwtAuthenticationFilter(JwtService jwtService, UsuarioService usuarioService) {
+    public JwtAuthenticationFilter(JwtService jwtService, UsuarioRepository usuarioRepository) {
         this.jwtService = jwtService;
-        this.usuarioService = usuarioService;
+        this.usuarioRepository = usuarioRepository;
     }
 
     @Override
@@ -51,15 +51,30 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         }
 
         if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-            Optional<Usuario> usuarioOpt = usuarioService.obtenerPorUsername(username);
-            if (usuarioOpt.isPresent() && jwtService.isTokenValid(token, username)) {
-                Usuario usuario = usuarioOpt.get();
-                List<SimpleGrantedAuthority> authorities = usuario.isAdmin()
-                        ? List.of(new SimpleGrantedAuthority("ROLE_ADMIN"))
-                        : List.of(new SimpleGrantedAuthority("ROLE_USER"));
+            if (jwtService.isTokenValid(token, username)) {
+                Integer userId = jwtService.extractUserId(token);
+                String rol = jwtService.extractRol(token);
 
+                // Si el token es de una versión anterior y no tenía uid o rol, lo resolvemos desde la base
+                if (userId == null || rol == null) {
+                    Optional<Usuario> usuarioOpt = usuarioRepository.findByUsername(username);
+                    if (usuarioOpt.isPresent()) {
+                        Usuario u = usuarioOpt.get();
+                        userId = u.getIdUsuario();
+                        rol = u.getRol();
+                    } else {
+                        filterChain.doFilter(request, response);
+                        return;
+                    }
+                }
+
+                List<SimpleGrantedAuthority> authorities = List.of(
+                        new SimpleGrantedAuthority(Roles.toAuthority(rol))
+                );
+
+                UserPrincipal principal = new UserPrincipal(userId, username, rol, authorities);
                 UsernamePasswordAuthenticationToken authToken =
-                        new UsernamePasswordAuthenticationToken(username, null, authorities);
+                        new UsernamePasswordAuthenticationToken(principal, null, authorities);
                 authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                 SecurityContextHolder.getContext().setAuthentication(authToken);
             }

@@ -32,7 +32,6 @@ import com.utn.chapterone.services.UsuarioService;
 
 
 @RestController
-@CrossOrigin(origins = "http://localhost:5173")
 @RequestMapping("/api/auth")
 public class AuthController {
 
@@ -139,12 +138,7 @@ public class AuthController {
             );
         }
 
-        String token = jwtService.generateToken(
-                usuario.getUsername(),
-                Map.of(
-                    "admin", usuario.isAdmin(),
-                    "urlFotoPerfil", usuario.getUrlFotoPerfil())
-        );
+        String token = jwtService.generateToken(usuario);
 
         AuthResponse response = new AuthResponse(token, jwtService.getExpirationMs());
         return ResponseEntity.ok(response);

@@ -139,17 +139,17 @@ INSERT INTO libros_generos (id_libro, id_genero) VALUES
   (21, 9),
   (22, 9);
 
-INSERT INTO usuarios (id_usuario, nombre, apellido, email, url_foto_perfil, admin, username, password) VALUES
-  (1, 'Ana', 'Lopez', 'ana@correo.com', 'https://example.com/ana.jpg', 1, 'ana.admin', '1234'),
-  (2, 'Bruno', 'Garcia', 'bruno@correo.com', 'https://example.com/bruno.jpg', 0, 'bruno.reader', '1234'),
-  (3, 'Carla', 'Mendez', 'carla@correo.com', 'https://example.com/carla.jpg', 0, 'carla.book', '1234'),
-  (4, 'Diego', 'Fernandez', 'diego@correo.com', 'https://example.com/diego.jpg', 0, 'diego.club', '1234'),
-  (5, 'Elena', 'Sosa', 'elena@correo.com', 'https://example.com/elena.jpg', 0, 'elena.pages', '1234'),
-  (6, 'Facundo', 'Perez', 'facundo@correo.com', 'https://example.com/facundo.jpg', 0, 'facu.reads', '1234'),
-  (7, 'Gabriela', 'Torres', 'gabriela@correo.com', 'https://example.com/gabriela.jpg', 0, 'gaby.books', '1234'),
-  (8, 'Hector', 'Sosa', 'hector@correo.com', 'https://example.com/hector.jpg', 0, 'hector.lectura', '1234'),
-  (9, 'Ines', 'Ramirez', 'ines@correo.com', 'https://example.com/ines.jpg', 0, 'ines.pages', '1234'),
-  (10, 'Juan', 'Diaz', 'juan@correo.com', 'https://example.com/juan.jpg', 0, 'juan.novelas', '1234');
+INSERT INTO usuarios (id_usuario, nombre, apellido, email, url_foto_perfil, rol, username, password) VALUES
+  (1, 'Ana', 'Lopez', 'ana@correo.com', 'https://example.com/ana.jpg', 'admin', 'ana.admin', '1234'),
+  (2, 'Bruno', 'Garcia', 'bruno@correo.com', 'https://example.com/bruno.jpg', 'user', 'bruno.reader', '1234'),
+  (3, 'Carla', 'Mendez', 'carla@correo.com', 'https://example.com/carla.jpg', 'user', 'carla.book', '1234'),
+  (4, 'Diego', 'Fernandez', 'diego@correo.com', 'https://example.com/diego.jpg', 'user', 'diego.club', '1234'),
+  (5, 'Elena', 'Sosa', 'elena@correo.com', 'https://example.com/elena.jpg', 'user', 'elena.pages', '1234'),
+  (6, 'Facundo', 'Perez', 'facundo@correo.com', 'https://example.com/facundo.jpg', 'user', 'facu.reads', '1234'),
+  (7, 'Gabriela', 'Torres', 'gabriela@correo.com', 'https://example.com/gabriela.jpg', 'user', 'gaby.books', '1234'),
+  (8, 'Hector', 'Sosa', 'hector@correo.com', 'https://example.com/hector.jpg', 'user', 'hector.lectura', '1234'),
+  (9, 'Ines', 'Ramirez', 'ines@correo.com', 'https://example.com/ines.jpg', 'user', 'ines.pages', '1234'),
+  (10, 'Juan', 'Diaz', 'juan@correo.com', 'https://example.com/juan.jpg', 'user', 'juan.novelas', '1234');
 
 INSERT INTO club (id_club, nombre_club, descrip, id_genero, id_admin, privado) VALUES
   (1, 'Club Fantasia', 'Lecturas de fantasia y worldbuilding', 1, 1, 0),

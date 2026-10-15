@@ -3,7 +3,6 @@ package com.utn.chapterone.controllers;
 import com.utn.chapterone.dto.Libro.LibroInputDTO;
 import com.utn.chapterone.dto.Libro.LibroOutputDTO;
 import com.utn.chapterone.services.LibroService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,11 +11,13 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/libros")
-@CrossOrigin(origins = "http://localhost:5173")
 public class LibroController {
 
-    @Autowired
-    private LibroService libroService;
+    private final LibroService libroService;
+
+    public LibroController(LibroService libroService) {
+        this.libroService = libroService;
+    }
 
     @GetMapping("")
     public ResponseEntity<List<LibroOutputDTO>> getAll() {
@@ -44,4 +45,3 @@ public class LibroController {
         return ResponseEntity.noContent().build();
     }
 }
-

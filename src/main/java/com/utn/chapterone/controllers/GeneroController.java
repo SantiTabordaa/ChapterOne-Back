@@ -3,23 +3,24 @@ package com.utn.chapterone.controllers;
 import com.utn.chapterone.dto.genero.GeneroDTO;
 import com.utn.chapterone.entities.Genero;
 import com.utn.chapterone.services.GeneroService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/generos")
-@CrossOrigin(origins = "http://localhost:5173")
 public class GeneroController {
 
-    @Autowired
-    private GeneroService generoService;
+    private final GeneroService generoService;
+
+    public GeneroController(GeneroService generoService) {
+        this.generoService = generoService;
+    }
 
     @GetMapping
     public List<GeneroDTO> obtenerTodos() {
-    return generoService.obtenerTodosDTO();
-}
+        return generoService.obtenerTodosDTO();
+    }
 
     @GetMapping("/{id}")
     public Genero obtenerPorId(@PathVariable Integer id) {
@@ -42,4 +43,3 @@ public class GeneroController {
         return "Género eliminado correctamente";
     }
 }
-   

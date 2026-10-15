@@ -3,10 +3,28 @@ package com.utn.chapterone.dto.usuario;
 import com.utn.chapterone.entities.Usuario;
 
 public class UsuarioRegistroDTO {
+    private Integer idUsuario;
     private String nombre;
     private String apellido;
     private String email;
     private String username;
+    private String rol;
+
+    public Integer getIdUsuario() {
+        return idUsuario;
+    }
+
+    public void setIdUsuario(Integer idUsuario) {
+        this.idUsuario = idUsuario;
+    }
+
+    public String getRol() {
+        return rol;
+    }
+
+    public void setRol(String rol) {
+        this.rol = rol;
+    }
 
     public String getNombre() {
         return nombre;
@@ -40,13 +58,16 @@ public class UsuarioRegistroDTO {
         this.username = username;
     }
 
+    public UsuarioRegistroDTO() {}
+
     public UsuarioRegistroDTO(Usuario usuario) {
         if (usuario != null) {
+            this.idUsuario = usuario.getIdUsuario();
             this.nombre = usuario.getNombre();
             this.apellido = usuario.getApellido();
             this.email = usuario.getEmail();
             this.username = usuario.getUsername();
+            this.rol = usuario.getRol();
         }
-        
     }
 }

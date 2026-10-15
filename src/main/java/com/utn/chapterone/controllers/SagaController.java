@@ -2,18 +2,19 @@ package com.utn.chapterone.controllers;
 
 import com.utn.chapterone.entities.Saga;
 import com.utn.chapterone.services.SagaService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/sagas")
-@CrossOrigin(origins = "http://localhost:5173")
 public class SagaController {
 
-    @Autowired
-    private SagaService sagaService;
+    private final SagaService sagaService;
+
+    public SagaController(SagaService sagaService) {
+        this.sagaService = sagaService;
+    }
 
     @GetMapping
     public List<Saga> obtenerTodos() {

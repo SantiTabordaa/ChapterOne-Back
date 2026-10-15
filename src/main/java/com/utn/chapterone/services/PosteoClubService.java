@@ -2,16 +2,31 @@ package com.utn.chapterone.services;
 
 import com.utn.chapterone.entities.PosteoClub;
 import com.utn.chapterone.repositories.PosteoClubRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.utn.chapterone.repositories.UsuarioRepository;
+import com.utn.chapterone.security.AuthorizationService;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
 public class PosteoClubService {
 
-    @Autowired
-    private PosteoClubRepository posteoClubRepository;
+    private final PosteoClubRepository posteoClubRepository;
+    private final UsuarioRepository usuarioRepository;
+    private final AuthorizationService authz;
+
+    public PosteoClubService(
+            PosteoClubRepository posteoClubRepository,
+            UsuarioRepository usuarioRepository,
+            AuthorizationService authz
+    ) {
+        this.posteoClubRepository = posteoClubRepository;
+        this.usuarioRepository = usuarioRepository;
+        this.authz = authz;
+    }
 
     public List<PosteoClub> obtenerTodos() {
         return posteoClubRepository.findAll();
@@ -19,29 +34,38 @@ public class PosteoClubService {
 
     public PosteoClub obtenerPorId(Integer id) {
         return posteoClubRepository.findById(id)
-            .orElseThrow(() -> new RuntimeException("Posteo no encontrado"));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Posteo no encontrado"));
     }
 
     public PosteoClub crear(PosteoClub posteoClub) {
+        Integer uid = authz.currentUserId();
+        if (uid != null) {
+            usuarioRepository.findById(uid).ifPresent(posteoClub::setUsuario);
+        }
+        if (posteoClub.getFechaHoraCreacion() == null) {
+            posteoClub.setFechaHoraCreacion(LocalDateTime.now());
+        }
         return posteoClubRepository.save(posteoClub);
     }
 
     public PosteoClub actualizar(Integer id, PosteoClub posteoActualizado) {
-        PosteoClub posteo = posteoClubRepository.findById(id)
-            .orElseThrow(() -> new RuntimeException("Posteo no encontrado"));
-        
+        PosteoClub posteo = obtenerPorId(id);
+
         posteo.setContenido(posteoActualizado.getContenido());
-        posteo.setFechaHoraCreacion(posteoActualizado.getFechaHoraCreacion());
-        posteo.setUsuario(posteoActualizado.getUsuario());
-        posteo.setClub(posteoActualizado.getClub());
-        
+        if (authz.isAdmin()) {
+            if (posteoActualizado.getUsuario() != null) {
+                posteo.setUsuario(posteoActualizado.getUsuario());
+            }
+            if (posteoActualizado.getClub() != null) {
+                posteo.setClub(posteoActualizado.getClub());
+            }
+        }
+
         return posteoClubRepository.save(posteo);
     }
 
     public void eliminar(Integer id) {
-        posteoClubRepository.findById(id)
-            .orElseThrow(() -> new RuntimeException("Posteo no encontrado"));
-        
-        posteoClubRepository.deleteById(id);
+        PosteoClub posteo = obtenerPorId(id);
+        posteoClubRepository.delete(posteo);
     }
 }

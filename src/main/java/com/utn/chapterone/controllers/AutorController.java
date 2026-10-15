@@ -4,18 +4,19 @@ import com.utn.chapterone.dto.autor.AutorDetalleDto;
 import com.utn.chapterone.dto.autor.AutorListadoDto;
 import com.utn.chapterone.entities.Autor;
 import com.utn.chapterone.services.AutorService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/autores")
-@CrossOrigin(origins = "http://localhost:5173")
 public class AutorController {
 
-    @Autowired
-    private AutorService autorService;
+    private final AutorService autorService;
+
+    public AutorController(AutorService autorService) {
+        this.autorService = autorService;
+    }
 
     @GetMapping
     public List<Autor> obtenerTodos() {
