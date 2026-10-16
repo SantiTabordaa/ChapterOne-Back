@@ -38,7 +38,6 @@ public class JwtService {
         Map<String, Object> claims = new HashMap<>();
         claims.put("uid", usuario.getIdUsuario());
         claims.put("rol", usuario.getRol());
-        claims.put("admin", usuario.isAdmin()); // retrocompatibilidad con frontend
         claims.put("urlFotoPerfil", usuario.getUrlFotoPerfil());
 
         return generateToken(usuario.getUsername(), claims);
@@ -88,11 +87,6 @@ public class JwtService {
         String rol = claims.get("rol", String.class);
         if (rol != null && !rol.isBlank()) {
             return rol;
-        }
-        // Fallback por retrocompatibilidad con tokens antiguos que solo tenían "admin"
-        Boolean admin = claims.get("admin", Boolean.class);
-        if (Boolean.TRUE.equals(admin)) {
-            return Roles.ADMIN;
         }
         return Roles.USER;
     }

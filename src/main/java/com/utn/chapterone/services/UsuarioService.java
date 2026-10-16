@@ -120,18 +120,6 @@ public class UsuarioService {
         return usuarioRepository.save(usuario);
     }
 
-    public Usuario actualizar(Integer id, Usuario usuarioActualizado) {
-        UsuarioUpdateDTO dto = new UsuarioUpdateDTO();
-        dto.setNombre(usuarioActualizado.getNombre());
-        dto.setApellido(usuarioActualizado.getApellido());
-        dto.setEmail(usuarioActualizado.getEmail());
-        dto.setUrlFotoPerfil(usuarioActualizado.getUrlFotoPerfil());
-        dto.setUsername(usuarioActualizado.getUsername());
-        dto.setPassword(usuarioActualizado.getPassword());
-        dto.setRol(usuarioActualizado.getRol());
-        return actualizar(id, dto, false);
-    }
-
     public void eliminar(Integer id) {
         Usuario usuario = obtenerPorId(id);
         usuarioRepository.delete(usuario);

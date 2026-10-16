@@ -91,7 +91,7 @@ public class LecturaService {
         Usuario usuario = usuarioRepository.findById(targetUserId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuario no encontrado"));
 
-        Integer idLibro = dto.resolveIdLibro();
+        Integer idLibro = dto.getIdLibro();
         if (idLibro == null) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Debe especificar el libro (idLibro)");
         }
@@ -121,7 +121,7 @@ public class LecturaService {
         Lectura lectura = lecturaRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Lectura no encontrada"));
 
-        Integer idLibro = dto.resolveIdLibro();
+        Integer idLibro = dto.getIdLibro();
         if (idLibro != null) {
             Libro libro = libroRepository.findById(idLibro)
                     .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Libro no encontrado"));

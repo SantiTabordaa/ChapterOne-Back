@@ -5,33 +5,10 @@ import java.util.Date;
 public class LecturaInputDTO {
 
     private Integer idLibro;
-    private LibroRef libro;
     private Integer idUsuario;
     private String estado;
     private Date fechaIni;
     private Date fechaFin;
-
-    public static class LibroRef {
-        private Integer idLibro;
-
-        public Integer getIdLibro() {
-            return idLibro;
-        }
-
-        public void setIdLibro(Integer idLibro) {
-            this.idLibro = idLibro;
-        }
-    }
-
-    public Integer resolveIdLibro() {
-        if (idLibro != null) {
-            return idLibro;
-        }
-        if (libro != null) {
-            return libro.getIdLibro();
-        }
-        return null;
-    }
 
     public Integer getIdLibro() {
         return idLibro;
@@ -39,14 +16,6 @@ public class LecturaInputDTO {
 
     public void setIdLibro(Integer idLibro) {
         this.idLibro = idLibro;
-    }
-
-    public LibroRef getLibro() {
-        return libro;
-    }
-
-    public void setLibro(LibroRef libro) {
-        this.libro = libro;
     }
 
     public Integer getIdUsuario() {

@@ -2,6 +2,7 @@ package com.utn.chapterone.entities;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.utn.chapterone.security.Roles;
 
@@ -55,12 +56,11 @@ public class Usuario {
 			this.rol = Roles.USER;
 		}
 	}
-	public Boolean isAdmin() {
+	@JsonIgnore
+	public boolean isAdmin() {
 		return Roles.ADMIN.equalsIgnoreCase(this.rol);
 	}
-	public void setAdmin(Boolean admin) {
-		this.rol = (Boolean.TRUE.equals(admin)) ? Roles.ADMIN : Roles.USER;
-	}
+	@JsonIgnore
 	public boolean isModerator() {
 		return Roles.MODERATOR.equalsIgnoreCase(this.rol);
 	}
@@ -107,18 +107,6 @@ public class Usuario {
 		this.email = email;
 		this.urlFotoPerfil = urlFotoPerfil;
 		setRol(rol);
-		this.username = username;
-		this.password = password;
-	}
-
-	public Usuario(String nombre, String apellido, String email, String urlFotoPerfil,
-			Boolean admin, String username, String password) {
-		super();
-		this.nombre = nombre;
-		this.apellido = apellido;
-		this.email = email;
-		this.urlFotoPerfil = urlFotoPerfil;
-		setAdmin(admin);
 		this.username = username;
 		this.password = password;
 	}

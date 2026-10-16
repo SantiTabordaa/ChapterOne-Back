@@ -37,11 +37,11 @@ class UsuarioSecurityTest {
         assertFalse(usuario.isAdmin());
         assertFalse(usuario.isModerator());
 
-        usuario.setAdmin(true);
+        usuario.setRol(Roles.ADMIN);
         assertEquals(Roles.ADMIN, usuario.getRol());
         assertTrue(usuario.isAdmin());
 
-        usuario.setAdmin(false);
+        usuario.setRol(Roles.USER);
         assertEquals(Roles.USER, usuario.getRol());
         assertFalse(usuario.isAdmin());
 

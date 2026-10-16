@@ -39,10 +39,6 @@ class JwtServiceTest {
         assertTrue(jwtService.isTokenValid(token, "juan.lector"));
         assertFalse(jwtService.isTokenValid(token, "otro.usuario"));
 
-        // Verificar claim retrocompatible "admin"
-        Boolean adminClaim = jwtService.extractClaim(token, c -> c.get("admin", Boolean.class));
-        assertFalse(adminClaim);
-
         String fotoClaim = jwtService.extractClaim(token, c -> c.get("urlFotoPerfil", String.class));
         assertEquals("https://example.com/avatar.png", fotoClaim);
     }
@@ -60,9 +56,6 @@ class JwtServiceTest {
         assertEquals("ana.admin", jwtService.extractUsername(token));
         assertEquals(1, jwtService.extractUserId(token));
         assertEquals(Roles.ADMIN, jwtService.extractRol(token));
-
-        Boolean adminClaim = jwtService.extractClaim(token, c -> c.get("admin", Boolean.class));
-        assertTrue(adminClaim);
     }
 
     @Test
@@ -74,7 +67,5 @@ class JwtServiceTest {
 
         String token = jwtService.generateToken(usuario);
         assertEquals(Roles.MODERATOR, jwtService.extractRol(token));
-        Boolean adminClaim = jwtService.extractClaim(token, c -> c.get("admin", Boolean.class));
-        assertFalse(Boolean.TRUE.equals(adminClaim));
     }
 }
