@@ -1,7 +1,10 @@
 package com.utn.chapterone.controllers;
 
-import com.utn.chapterone.entities.Lectura;
+import com.utn.chapterone.dto.lectura.LecturaInputDTO;
+import com.utn.chapterone.dto.lectura.LecturaOutputDTO;
 import com.utn.chapterone.services.LecturaService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,30 +22,43 @@ public class LecturaController {
 
     @GetMapping("")
     @PreAuthorize("hasRole('ADMIN')")
-    public List<Lectura> getAll() {
-        return lecturaService.obtenerTodos();
+    public ResponseEntity<List<LecturaOutputDTO>> getAll() {
+        return ResponseEntity.ok(lecturaService.obtenerTodos());
+    }
+
+    @GetMapping("/mis-lecturas")
+    public ResponseEntity<List<LecturaOutputDTO>> getMisLecturas() {
+        return ResponseEntity.ok(lecturaService.obtenerMisLecturas());
+    }
+
+    @GetMapping("/libro/{idLibro}")
+    public ResponseEntity<LecturaOutputDTO> getMiLecturaPorLibro(@PathVariable Integer idLibro) {
+        return lecturaService.obtenerMiLecturaPorLibro(idLibro)
+                .map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.noContent().build());
     }
 
     @GetMapping("/{id}")
     @PreAuthorize("@authz.ownsLectura(#id)")
-    public Lectura getById(@PathVariable Integer id) {
-        return lecturaService.obtenerPorId(id);
+    public ResponseEntity<LecturaOutputDTO> getById(@PathVariable Integer id) {
+        return ResponseEntity.ok(lecturaService.obtenerPorId(id));
     }
 
     @PostMapping("")
-    public Lectura save(@RequestBody Lectura lectura) {
-        return lecturaService.crear(lectura);
+    public ResponseEntity<LecturaOutputDTO> save(@RequestBody LecturaInputDTO dto) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(lecturaService.crear(dto));
     }
 
     @PutMapping("/{id}")
     @PreAuthorize("@authz.ownsLectura(#id)")
-    public Lectura update(@PathVariable Integer id, @RequestBody Lectura lectura) {
-        return lecturaService.actualizar(id, lectura);
+    public ResponseEntity<LecturaOutputDTO> update(@PathVariable Integer id, @RequestBody LecturaInputDTO dto) {
+        return ResponseEntity.ok(lecturaService.actualizar(id, dto));
     }
 
     @DeleteMapping("/{id}")
     @PreAuthorize("@authz.ownsLectura(#id)")
-    public void delete(@PathVariable Integer id) {
+    public ResponseEntity<Void> delete(@PathVariable Integer id) {
         lecturaService.eliminar(id);
+        return ResponseEntity.noContent().build();
     }
 }
