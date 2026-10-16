@@ -24,6 +24,13 @@ public class LibroController {
         return ResponseEntity.ok(libroService.getAll());
     }
 
+    @GetMapping("/recomendados")
+    public ResponseEntity<List<LibroOutputDTO>> getRecomendados(
+            @RequestParam(defaultValue = "5") int limite
+    ) {
+        return ResponseEntity.ok(libroService.obtenerRecomendados(limite));
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<LibroOutputDTO> getById(@PathVariable Integer id) {
         return ResponseEntity.ok(libroService.getById(id));
