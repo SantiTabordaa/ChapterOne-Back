@@ -132,7 +132,7 @@ public class LibroService {
         libroRepository.deleteById(id);
     }
 
-    private LibroOutputDTO toOutputDTO(Libro libro) {
+    public LibroOutputDTO toOutputDTO(Libro libro) {
         LibroOutputDTO dto = new LibroOutputDTO();
         dto.setIdLibro(libro.getIdLibro());
         dto.setTitulo(libro.getTitulo());
