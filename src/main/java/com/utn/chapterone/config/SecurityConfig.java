@@ -44,6 +44,7 @@ public class SecurityConfig {
                         .requestMatchers("/api/auth/**", "/images/**", "/uploads/**", "/error").permitAll()
                         .requestMatchers(HttpMethod.GET, catalogo).permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/clubes/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/resenas/**").permitAll()
                         // Nivel 3: Modificación del catálogo restringida a Administradores
                         .requestMatchers(HttpMethod.POST, catalogo).hasRole("ADMIN")
                         .requestMatchers(HttpMethod.PUT, catalogo).hasRole("ADMIN")
