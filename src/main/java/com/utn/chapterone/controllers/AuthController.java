@@ -107,7 +107,13 @@ public class AuthController {
         // Creacion de la RegisterRequest
         RegisterRequest registerRequest = new RegisterRequest(nombre, apellido, email, username, password, rutaDB);
         // guardado en persistencia
-        usuarioService.register(registerRequest);
+        Usuario nuevoUsuario = usuarioService.register(registerRequest);
+        String token = jwtService.generateToken(nuevoUsuario);
+
+        response.put("status", "success");
+        response.put("token", token);
+        response.put("tokenType", "Bearer");
+        response.put("expiresInMs", jwtService.getExpirationMs());
              
         return ResponseEntity.ok(response);
     }catch (IOException e){
