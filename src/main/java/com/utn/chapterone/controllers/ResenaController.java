@@ -1,11 +1,15 @@
 package com.utn.chapterone.controllers;
 
-import com.utn.chapterone.entities.Resena;
+import com.utn.chapterone.dto.resena.ResenaInputDTO;
+import com.utn.chapterone.dto.resena.ResenaOutputDTO;
 import com.utn.chapterone.services.ResenaService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/resenas")
@@ -18,30 +22,50 @@ public class ResenaController {
     }
 
     @GetMapping
-    public List<Resena> obtenerTodos() {
-        return resenaService.obtenerTodos();
+    public ResponseEntity<List<ResenaOutputDTO>> obtenerTodos() {
+        return ResponseEntity.ok(resenaService.obtenerTodos());
+    }
+
+    @GetMapping("/libro/{idLibro}")
+    public ResponseEntity<List<ResenaOutputDTO>> obtenerPorLibro(@PathVariable Integer idLibro) {
+        return ResponseEntity.ok(resenaService.obtenerPorLibro(idLibro));
     }
 
     @GetMapping("/{id}")
-    public Resena obtenerPorId(@PathVariable Integer id) {
-        return resenaService.obtenerPorId(id);
+    public ResponseEntity<ResenaOutputDTO> obtenerPorId(@PathVariable Integer id) {
+        return ResponseEntity.ok(resenaService.obtenerPorId(id));
     }
 
     @PostMapping
-    public Resena crear(@RequestBody Resena resena) {
-        return resenaService.crear(resena);
+    public ResponseEntity<ResenaOutputDTO> crear(@RequestBody ResenaInputDTO dto) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(resenaService.crear(dto));
     }
 
     @PutMapping("/{id}")
     @PreAuthorize("@authz.ownsResena(#id)")
-    public Resena actualizar(@PathVariable Integer id, @RequestBody Resena resena) {
-        return resenaService.actualizar(id, resena);
+    public ResponseEntity<ResenaOutputDTO> actualizar(@PathVariable Integer id, @RequestBody ResenaInputDTO dto) {
+        return ResponseEntity.ok(resenaService.actualizar(id, dto));
     }
 
     @DeleteMapping("/{id}")
     @PreAuthorize("@authz.ownsResena(#id)")
-    public String eliminar(@PathVariable Integer id) {
+    public ResponseEntity<Void> eliminar(@PathVariable Integer id) {
         resenaService.eliminar(id);
-        return "Reseña eliminada correctamente";
+        return ResponseEntity.noContent().build();
+    }
+
+    @PostMapping("/{id}/denunciar")
+    public ResponseEntity<ResenaOutputDTO> denunciar(
+            @PathVariable Integer id,
+            @RequestBody(required = false) Map<String, String> body
+    ) {
+        String motivo = body != null ? body.get("motivo") : null;
+        return ResponseEntity.ok(resenaService.denunciar(id, motivo));
+    }
+
+    @PutMapping("/{id}/desestimar-denuncia")
+    @PreAuthorize("@authz.isAdmin()")
+    public ResponseEntity<ResenaOutputDTO> desestimarDenuncia(@PathVariable Integer id) {
+        return ResponseEntity.ok(resenaService.desestimarDenuncia(id));
     }
 }

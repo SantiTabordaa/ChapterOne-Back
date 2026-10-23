@@ -64,9 +64,14 @@ public class Lectura {
 	public Resena getResena() {
 		return resena;
 	}
+	public void setResena(Resena resena) {
+		this.resena = resena;
+	}
 	public void agregarResena(Resena resena) {
 		this.resena = resena;
-		resena.setLectura(this); //le decimos a la resena que su lectura es esta lectura, para mantener la relacion bidireccional entre lectura y resena
+		if (resena != null) {
+			resena.setLectura(this); //le decimos a la resena que su lectura es esta lectura, para mantener la relacion bidireccional entre lectura y resena
+		}
 	}
 
 	public Lectura() {
