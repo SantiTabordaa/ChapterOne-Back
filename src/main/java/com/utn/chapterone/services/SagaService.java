@@ -2,6 +2,7 @@ package com.utn.chapterone.services;
 
 import org.springframework.stereotype.Service;
 import com.utn.chapterone.entities.Saga;
+import com.utn.chapterone.exceptions.ResourceNotFoundException;
 import com.utn.chapterone.repositories.SagaRepository;
 
 import java.util.List;
@@ -21,7 +22,7 @@ public class SagaService {
 
     public Saga obtenerPorId(Integer id) {
         return sagaRepository.findById(id)
-            .orElseThrow(() -> new RuntimeException("Saga no encontrada"));
+            .orElseThrow(() -> new ResourceNotFoundException("Saga no encontrada"));
     }
 
     public Saga crear(Saga saga) {
@@ -30,7 +31,7 @@ public class SagaService {
 
     public Saga actualizar(Integer id, Saga sagaActualizada) {
         Saga saga = sagaRepository.findById(id)
-            .orElseThrow(() -> new RuntimeException("Saga no encontrada"));
+            .orElseThrow(() -> new ResourceNotFoundException("Saga no encontrada"));
 
         saga.setNombre(sagaActualizada.getNombre());
 
@@ -39,7 +40,7 @@ public class SagaService {
 
     public void eliminar(Integer id) {
         sagaRepository.findById(id)
-            .orElseThrow(() -> new RuntimeException("Saga no encontrada"));
+            .orElseThrow(() -> new ResourceNotFoundException("Saga no encontrada"));
 
         sagaRepository.deleteById(id);
     }
