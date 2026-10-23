@@ -6,6 +6,7 @@ import com.utn.chapterone.dto.autor.AutorListadoDto;
 import com.utn.chapterone.dto.autor.AutorDetalleDto;
 import com.utn.chapterone.dto.autor.LibroAutorDto;
 import com.utn.chapterone.entities.Autor;
+import com.utn.chapterone.exceptions.ResourceNotFoundException;
 import com.utn.chapterone.repositories.AutorRepository;
 
 import java.util.List;
@@ -33,7 +34,7 @@ public class AutorService {
     @Transactional(readOnly = true)
     public AutorDetalleDto obtenerPorId(Integer id) {
         Autor autor = autorRepository.findById(id)
-            .orElseThrow(() -> new RuntimeException("Autor no encontrado"));
+            .orElseThrow(() -> new ResourceNotFoundException("Autor no encontrado"));
 
         AutorDetalleDto dto = new AutorDetalleDto();
         dto.setIdAutor(autor.getIdAutor());
@@ -66,7 +67,7 @@ public class AutorService {
 
     public Autor actualizar(Integer id, Autor autorActualizado) {
         Autor autor = autorRepository.findById(id)
-            .orElseThrow(() -> new RuntimeException("Autor no encontrado"));
+            .orElseThrow(() -> new ResourceNotFoundException("Autor no encontrado"));
 
         autor.setNombre(autorActualizado.getNombre());
         autor.setApellido(autorActualizado.getApellido());
@@ -82,7 +83,7 @@ public class AutorService {
 
     public void eliminar(Integer id) {
         autorRepository.findById(id)
-            .orElseThrow(() -> new RuntimeException("Autor no encontrado"));
+            .orElseThrow(() -> new ResourceNotFoundException("Autor no encontrado"));
 
         autorRepository.deleteById(id);
     }

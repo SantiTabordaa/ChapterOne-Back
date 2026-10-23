@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
+import com.utn.chapterone.exceptions.ResourceNotFoundException;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -51,7 +52,7 @@ public class LibroService {
 
     public LibroOutputDTO getById(Integer id) {
         Libro libro = libroRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Libro no encontrado"));
+                .orElseThrow(() -> new ResourceNotFoundException("Libro no encontrado"));
         return toOutputDTO(libro);
     }
 
@@ -165,7 +166,7 @@ public class LibroService {
         List<Autor> autores = new ArrayList<>();
         for (Integer autorId : libroInputDTO.getAutoresIds()) {
             Autor autor = autorRepository.findById(autorId)
-                    .orElseThrow(() -> new RuntimeException("Autor no encontrado con ID: " + autorId));
+                    .orElseThrow(() -> new ResourceNotFoundException("Autor no encontrado con ID: " + autorId));
             autores.add(autor);
         }
         libro.setAutores(autores);
@@ -174,7 +175,7 @@ public class LibroService {
         List<Genero> generos = new ArrayList<>();
         for (Integer generoId : libroInputDTO.getGenerosIds()) {
             Genero genero = generoRepository.findById(generoId)
-                    .orElseThrow(() -> new RuntimeException("Género no encontrado con ID: " + generoId));
+                    .orElseThrow(() -> new ResourceNotFoundException("Género no encontrado con ID: " + generoId));
             generos.add(genero);
         }
         libro.setGeneros(generos);
@@ -182,7 +183,7 @@ public class LibroService {
         // Manejo de Saga
         if (libroInputDTO.getSaga() != null && !libroInputDTO.getSaga().isEmpty()) {
             Saga saga = sagaRepository.findByNombre(libroInputDTO.getSaga())
-                    .orElseThrow(() -> new RuntimeException("Saga no encontrada: " + libroInputDTO.getSaga()));
+                    .orElseThrow(() -> new ResourceNotFoundException("Saga no encontrada: " + libroInputDTO.getSaga()));
             libro.setSaga(saga);
         }
 
@@ -193,7 +194,7 @@ public class LibroService {
     @Transactional
     public LibroOutputDTO update(Integer id, LibroInputDTO libroInputDTO) {
         Libro libro = libroRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Libro no encontrado"));
+                .orElseThrow(() -> new ResourceNotFoundException("Libro no encontrado"));
 
         libro.setTitulo(libroInputDTO.getTitulo());
         libro.setSinopsis(libroInputDTO.getSinopsis());
@@ -206,7 +207,7 @@ public class LibroService {
         List<Autor> autores = new ArrayList<>();
         for (Integer autorId : libroInputDTO.getAutoresIds()) {
             Autor autor = autorRepository.findById(autorId)
-                    .orElseThrow(() -> new RuntimeException("Autor no encontrado con ID: " + autorId));
+                    .orElseThrow(() -> new ResourceNotFoundException("Autor no encontrado con ID: " + autorId));
             autores.add(autor);
         }
         libro.setAutores(autores);
@@ -215,7 +216,7 @@ public class LibroService {
         List<Genero> generos = new ArrayList<>();
         for (Integer generoId : libroInputDTO.getGenerosIds()) {
             Genero genero = generoRepository.findById(generoId)
-                    .orElseThrow(() -> new RuntimeException("Género no encontrado con ID: " + generoId));
+                    .orElseThrow(() -> new ResourceNotFoundException("Género no encontrado con ID: " + generoId));
             generos.add(genero);
         }
         libro.setGeneros(generos);
@@ -223,7 +224,7 @@ public class LibroService {
         // Actualización de Saga
         if (libroInputDTO.getSaga() != null && !libroInputDTO.getSaga().isEmpty()) {
             Saga saga = sagaRepository.findByNombre(libroInputDTO.getSaga())
-                    .orElseThrow(() -> new RuntimeException("Saga no encontrada: " + libroInputDTO.getSaga()));
+                    .orElseThrow(() -> new ResourceNotFoundException("Saga no encontrada: " + libroInputDTO.getSaga()));
             libro.setSaga(saga);
         } else {
             libro.setSaga(null);
@@ -235,7 +236,7 @@ public class LibroService {
 
     public void delete(Integer id) {
         libroRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Libro no encontrado"));
+                .orElseThrow(() -> new ResourceNotFoundException("Libro no encontrado"));
         libroRepository.deleteById(id);
     }
 

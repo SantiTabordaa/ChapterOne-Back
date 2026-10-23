@@ -26,8 +26,11 @@ import com.utn.chapterone.dto.auth.AuthResponse;
 import com.utn.chapterone.dto.auth.LoginRequest;
 import com.utn.chapterone.dto.auth.RegisterRequest;
 import com.utn.chapterone.entities.Usuario;
+import com.utn.chapterone.exceptions.BadRequestException;
+import com.utn.chapterone.exceptions.UnauthorizedException;
 import com.utn.chapterone.security.JwtService;
 import com.utn.chapterone.services.UsuarioService;
+import jakarta.validation.Valid;
 
 
 
@@ -60,88 +63,64 @@ public class AuthController {
         @RequestParam("username") String username,
         @RequestParam("password") String password
     ) {
-        if(!password.matches("^(?=.*[a-z])(?=.*[A-Z]).{8,}$")){
-                Map<String, Object> errorResponse = new HashMap<>();
-                errorResponse.put("status", "error");
-                errorResponse.put("message", "La contraseña no cumple con los requisitos mínimos de seguridad.");
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
+        if (!password.matches("^(?=.*[a-z])(?=.*[A-Z]).{8,}$")) {
+            throw new BadRequestException("La contraseña no cumple con los requisitos mínimos de seguridad.");
         }
         try {
-            
-            
             Path rutaCompleta = null;
             String rutaDB = null;
             Map<String, Object> response = new HashMap<>();
 
-            if(file != null && !file.isEmpty()){
-            // GUARDADO DEL ARCHIVO:
-            // limpiar archivo viejo (evitar ataques pathTraversal)
-            String originalFilename = StringUtils.cleanPath(Objects.requireNonNull(file.getOriginalFilename()));
-            // renombramiento del archivo para evitar duplicados
-            String extension = originalFilename.substring(originalFilename.lastIndexOf("."));
-            String fileName = username + "_profile" + extension;
+            if (file != null && !file.isEmpty()) {
+                // GUARDADO DEL ARCHIVO:
+                // limpiar archivo viejo (evitar ataques pathTraversal)
+                String originalFilename = StringUtils.cleanPath(Objects.requireNonNull(file.getOriginalFilename()));
+                // renombramiento del archivo para evitar duplicados
+                String extension = originalFilename.substring(originalFilename.lastIndexOf("."));
+                String fileName = username + "_profile" + extension;
 
-            Path rutaDirectorio = Paths.get(UPLOAD_DIR);
-            
-            rutaCompleta = rutaDirectorio.resolve(fileName);
-            
-            rutaDB = GET_AVATAR_URL + fileName;
-            //DEBUG
-            System.out.println(rutaDB);
+                Path rutaDirectorio = Paths.get(UPLOAD_DIR);
+                rutaCompleta = rutaDirectorio.resolve(fileName);
+                rutaDB = GET_AVATAR_URL + fileName;
 
-            if(!Files.exists(rutaDirectorio)){
-                Files.createDirectories(rutaDirectorio);
+                if (!Files.exists(rutaDirectorio)) {
+                    Files.createDirectories(rutaDirectorio);
+                }
+
+                // guardado en disco
+                Files.copy(file.getInputStream(), rutaCompleta, StandardCopyOption.REPLACE_EXISTING);
+                response.put("status", "success");
+                response.put("usuario", username);
+                response.put("archivoRecibido", originalFilename);
+                response.put("nombreFinalArchivo", fileName);
+            } else {
+                response.put("archivoRecibido", "null");
+                rutaDB = "noPhotoSelected";
             }
+            // Creacion de la RegisterRequest
+            RegisterRequest registerRequest = new RegisterRequest(nombre, apellido, email, username, password, rutaDB);
+            // guardado en persistencia
+            Usuario nuevoUsuario = usuarioService.register(registerRequest);
+            String token = jwtService.generateToken(nuevoUsuario);
 
-            // guardado en disco
-            Files.copy(file.getInputStream(), rutaCompleta,StandardCopyOption.REPLACE_EXISTING);
             response.put("status", "success");
-            response.put("usuario", username);
-            response.put("archivoRecibido", originalFilename);
-            // DEBUG
-            response.put("nombreFinalArchivo", fileName);
-        } else {
-            response.put("archivoRecibido", "null");
-            rutaDB = "noPhotoSelected";
+            response.put("token", token);
+            response.put("tokenType", "Bearer");
+            response.put("expiresInMs", jwtService.getExpirationMs());
+
+            return ResponseEntity.ok(response);
+        } catch (IOException e) {
+            throw new BadRequestException("Error al guardar imagen: " + e.getMessage());
         }
-        // Creacion de la RegisterRequest
-        RegisterRequest registerRequest = new RegisterRequest(nombre, apellido, email, username, password, rutaDB);
-        // guardado en persistencia
-        Usuario nuevoUsuario = usuarioService.register(registerRequest);
-        String token = jwtService.generateToken(nuevoUsuario);
-
-        response.put("status", "success");
-        response.put("token", token);
-        response.put("tokenType", "Bearer");
-        response.put("expiresInMs", jwtService.getExpirationMs());
-             
-        return ResponseEntity.ok(response);
-    }catch (IOException e){
-        e.printStackTrace();
-
-        Map<String, Object> errorResponse = new HashMap<>();
-        errorResponse.put("status", "error");
-        errorResponse.put("message", "Error al guardar imagen: " + e.getMessage());
-
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
-    }
-
-
     }
 
     @PostMapping("/login")
-    public ResponseEntity<AuthResponse> login(@RequestBody LoginRequest request) {
-        Usuario usuario = usuarioService.obtenerPorUsername(request.getUsername()) //TODO: cambiar a bloque try catch
-                .orElseThrow(() -> new org.springframework.web.server.ResponseStatusException(
-                        HttpStatus.UNAUTHORIZED,
-                        "Credenciales inválidas."
-                ));
+    public ResponseEntity<AuthResponse> login(@Valid @RequestBody LoginRequest request) {
+        Usuario usuario = usuarioService.obtenerPorUsername(request.getUsername())
+                .orElseThrow(() -> new UnauthorizedException("Credenciales inválidas."));
 
         if (!passwordEncoder.matches(request.getPassword(), usuario.getPassword())) {
-            throw new org.springframework.web.server.ResponseStatusException(
-                    HttpStatus.UNAUTHORIZED,
-                    "Credenciales inválidas."
-            );
+            throw new UnauthorizedException("Credenciales inválidas.");
         }
 
         String token = jwtService.generateToken(usuario);
