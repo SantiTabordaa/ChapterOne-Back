@@ -16,6 +16,8 @@ public class ResenaOutputDTO {
     private String nombreUsuario;
     private String apellidoUsuario;
     private String urlFotoPerfil;
+    private Boolean denunciada;
+    private String motivoDenuncia;
 
     public Integer getIdResena() {
         return idResena;
@@ -111,5 +113,21 @@ public class ResenaOutputDTO {
 
     public void setUrlFotoPerfil(String urlFotoPerfil) {
         this.urlFotoPerfil = urlFotoPerfil;
+    }
+
+    public Boolean getDenunciada() {
+        return denunciada;
+    }
+
+    public void setDenunciada(Boolean denunciada) {
+        this.denunciada = denunciada;
+    }
+
+    public String getMotivoDenuncia() {
+        return motivoDenuncia;
+    }
+
+    public void setMotivoDenuncia(String motivoDenuncia) {
+        this.motivoDenuncia = motivoDenuncia;
     }
 }

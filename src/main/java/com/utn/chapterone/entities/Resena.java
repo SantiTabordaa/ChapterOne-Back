@@ -13,6 +13,9 @@ public class Resena {
 	private String contenido;
 	private Double puntaje;
 	private LocalDate fechaResena;
+	@Column(columnDefinition = "boolean default false")
+	private Boolean denunciada = false;
+	private String motivoDenuncia;
 	@OneToOne
 	@JoinColumn(name = "id_lectura",  unique = true, nullable = false) //le decimos a jpa que la columna se va a llamar idLectura, que es unica y no puede ser nula
 	@JsonBackReference //evita el error de referencia circular al serializar la lectura y la resena
@@ -48,6 +51,18 @@ public class Resena {
 	}
 	public void setLectura(Lectura lectura) {
 		this.lectura = lectura;
+	}
+	public Boolean getDenunciada() {
+		return denunciada;
+	}
+	public void setDenunciada(Boolean denunciada) {
+		this.denunciada = denunciada;
+	}
+	public String getMotivoDenuncia() {
+		return motivoDenuncia;
+	}
+	public void setMotivoDenuncia(String motivoDenuncia) {
+		this.motivoDenuncia = motivoDenuncia;
 	}
 	
 	 

@@ -123,6 +123,45 @@ public class ResenaService {
         resenaRepository.delete(resena);
     }
 
+    @Transactional
+    public ResenaOutputDTO denunciar(Integer id, String motivo) {
+        Integer uid = authz.currentUserId();
+        if (uid == null) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Debes iniciar sesión para denunciar una reseña.");
+        }
+
+        Resena resena = resenaRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Reseña no encontrada"));
+
+        if (resena.getLectura() != null
+                && resena.getLectura().getUsuario() != null
+                && uid.equals(resena.getLectura().getUsuario().getIdUsuario())) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "No puedes denunciar tu propia reseña.");
+        }
+
+        resena.setDenunciada(true);
+        if (motivo != null && !motivo.trim().isEmpty()) {
+            resena.setMotivoDenuncia(motivo.trim());
+        } else if (resena.getMotivoDenuncia() == null) {
+            resena.setMotivoDenuncia("Contenido inapropiado o spoiler");
+        }
+
+        Resena guardada = resenaRepository.save(resena);
+        return toOutputDTO(guardada);
+    }
+
+    @Transactional
+    public ResenaOutputDTO desestimarDenuncia(Integer id) {
+        Resena resena = resenaRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Reseña no encontrada"));
+
+        resena.setDenunciada(false);
+        resena.setMotivoDenuncia(null);
+
+        Resena guardada = resenaRepository.save(resena);
+        return toOutputDTO(guardada);
+    }
+
     private void validarDatosResena(ResenaInputDTO dto) {
         if (dto == null) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Los datos de la reseña son obligatorios");
@@ -188,6 +227,8 @@ public class ResenaService {
         dto.setContenido(resena.getContenido());
         dto.setPuntaje(resena.getPuntaje());
         dto.setFechaResena(resena.getFechaResena());
+        dto.setDenunciada(Boolean.TRUE.equals(resena.getDenunciada()));
+        dto.setMotivoDenuncia(resena.getMotivoDenuncia());
 
         Lectura lectura = resena.getLectura();
         if (lectura != null) {

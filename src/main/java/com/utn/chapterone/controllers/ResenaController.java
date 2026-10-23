@@ -9,6 +9,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/resenas")
@@ -51,5 +52,20 @@ public class ResenaController {
     public ResponseEntity<Void> eliminar(@PathVariable Integer id) {
         resenaService.eliminar(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @PostMapping("/{id}/denunciar")
+    public ResponseEntity<ResenaOutputDTO> denunciar(
+            @PathVariable Integer id,
+            @RequestBody(required = false) Map<String, String> body
+    ) {
+        String motivo = body != null ? body.get("motivo") : null;
+        return ResponseEntity.ok(resenaService.denunciar(id, motivo));
+    }
+
+    @PutMapping("/{id}/desestimar-denuncia")
+    @PreAuthorize("@authz.isAdmin()")
+    public ResponseEntity<ResenaOutputDTO> desestimarDenuncia(@PathVariable Integer id) {
+        return ResponseEntity.ok(resenaService.desestimarDenuncia(id));
     }
 }
